@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LabSlot — UI Concept</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600;1,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  :root{
+    --bg:#F7F2E4; --inner:#FBF8EC; --mint:#D8E6D4; --mint-deep:#CDE4CE;
+    --yellow:#F5ED9C; --accent:#EDE17C; --pink:#F2CFDB; --blue:#D8E2E9; --taupe:#CBC2AD;
+    --ink:#33322C; --muted:#8A8878; --faint:#B4AE97; --track:#EDE8D2;
+    --green:#3E6B4F;
+  }
+  body{min-height:100vh;background:#ECECF1;display:flex;align-items:center;justify-content:center;
+    font-family:'Inter',system-ui,sans-serif;color:var(--ink);padding:20px}
+  .serif{font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:700}
+
+  /* ------- phone frame ------- */
+  .phone{width:402px;height:848px;border-radius:58px;padding:10px;position:relative;
+    background:linear-gradient(160deg,#cfc2f2,#b3a1e6 38%,#d9cfa9 72%,#b3a1e6);
+    box-shadow:0 44px 90px rgba(60,50,110,.35), inset 0 0 0 2px rgba(255,255,255,.4)}
+  .screen{position:relative;width:100%;height:100%;background:var(--bg);border-radius:48px;
+    overflow:hidden;border:7px solid #101010}
+  .island{position:absolute;top:16px;left:50%;transform:translateX(-50%);width:112px;height:32px;
+    background:#0c0c0c;border-radius:18px;z-index:70;pointer-events:none}
+  .island::after{content:'';position:absolute;right:14px;top:50%;transform:translateY(-50%);
+    width:10px;height:10px;border-radius:50%;background:#1d2030;box-shadow:inset 0 0 3px #3b4b7a}
+
+  /* ------- screens ------- */
+  .scr{position:absolute;inset:0;overflow-y:auto;padding:62px 18px 116px;opacity:0;
+    pointer-events:none;transition:opacity .16s ease;scrollbar-width:none}
+  .scr::-webkit-scrollbar{display:none}
+  .scr.on{opacity:1;pointer-events:auto;animation:rise .22s ease}
+  @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .scr.bare{padding-bottom:44px}
+
+  /* ------- shared bits ------- */
+  .hello{font-size:14px;color:#6E6A58;margin:8px 0 0 4px}
+  .brand{font-size:42px;letter-spacing:.5px;margin:0 0 16px 2px}
+  .back{display:inline-flex;align-items:center;gap:6px;color:#7C7767;background:none;border:none;
+    font-size:15px;cursor:pointer;font-family:inherit;margin-bottom:8px;padding:4px 2px}
+  .d-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+  .d-title{font-size:32px;line-height:1.1}
+  .d-sub{color:var(--muted);font-size:13.5px;margin-top:5px}
+  .d-meta{text-align:right;flex-shrink:0}
+  .d-coord{font-size:12.5px;color:var(--muted);margin-bottom:6px;letter-spacing:.3px}
+
+  .badge{display:inline-block;padding:5px 13px;border-radius:999px;font-size:12px;font-weight:600;white-space:nowrap}
+  .b-avl{background:var(--accent);color:#4d4413}
+  .b-use{background:var(--blue);color:#33586B}
+  .b-mnt{background:var(--pink);color:#8A3B58}
+  .b-rsv{background:var(--mint-deep);color:#2E5B3C}
+  .b-up{background:var(--mint-deep);color:#2E5B3C}
+  .b-done{background:var(--taupe);color:#4d4636}
+
+  .sec{border-radius:26px;padding:16px 14px 10px;margin-bottom:18px}
+  .sec.mint{background:var(--mint)} .sec.yellow{background:var(--yellow)}
+  .sec-head{display:flex;margin-bottom:12px}
+  .sec-band{flex:1;background:rgba(255,255,255,.32);border-radius:12px;padding:2px 12px}
+  .sec-title{font-size:25px}
+
+  .search{display:flex;align-items:center;gap:8px;background:var(--inner);border-radius:999px;
+    padding:12px 16px;margin-bottom:12px}
+  .search input{flex:1;border:none;background:transparent;outline:none;font-size:15px;
+    font-family:inherit;color:var(--ink)}
+  .search input::placeholder{color:var(--faint)}
+  .search svg{flex-shrink:0;opacity:.55}
+
+  .item{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--inner);
+    border-radius:16px;padding:12px 14px;margin-bottom:10px;cursor:pointer;transition:transform .12s}
+  .item:active{transform:scale(.975)}
+  .item b{font-size:15px;font-weight:600;display:block}
+  .item small{display:block;color:var(--muted);font-size:12.5px;margin-top:2px}
+  .bar{width:104px;height:7px;background:var(--track);border-radius:99px;overflow:hidden;flex-shrink:0}
+  .bar i{display:block;height:100%;background:var(--green);border-radius:99px;transition:width .3s}
+  .pct{font-size:13px;font-weight:600;width:42px;text-align:right;flex-shrink:0}
+
+  .artcard{background:var(--inner);border-radius:22px;display:flex;align-items:center;
+    justify-content:center;padding:24px 0;margin:16px 0}
+  .info{background:var(--inner);border-radius:20px;padding:16px 18px;margin-bottom:18px}
+  .row{display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding:7px 0;font-size:14.5px}
+  .row span{color:var(--muted);flex-shrink:0}
+  .row b{font-weight:600;text-align:right}
+
+  .pills{display:flex;flex-wrap:wrap;gap:12px;margin-top:2px}
+  .pill{border:none;border-radius:999px;padding:13px 22px;font-size:16px;cursor:pointer;color:#3A382F;
+    font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:600;
+    transition:transform .12s,opacity .15s}
+  .pill:active{transform:scale(.95)}
+  .pill[disabled]{opacity:.45;cursor:not-allowed}
+  .p-yellow{background:var(--accent)} .p-blue{background:var(--blue)} .p-pink{background:var(--pink)}
+  .p-mint{background:var(--mint-deep)} .p-taupe{background:var(--taupe)}
+  .bigpill{display:block;margin:18px auto 0;background:var(--accent);border:none;border-radius:999px;
+    padding:15px 36px;font-size:17px;cursor:pointer;color:#3A382F;
+    font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:600;transition:transform .12s}
+  .bigpill:active{transform:scale(.96)}
+
+  /* calendar + time */
+  .cal{background:var(--inner);border-radius:20px;padding:16px;margin-bottom:14px}
+  .cal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .cal-head h3{font-family:'Playfair Display',serif;font-style:italic;font-size:19px;font-weight:700}
+  .mbtn{width:32px;height:32px;border-radius:50%;border:none;background:transparent;cursor:pointer;
+    color:var(--muted);font-size:15px;display:flex;align-items:center;justify-content:center}
+  .mbtn:hover{background:#F1EBD8}
+  .cgrid{display:grid;grid-template-columns:repeat(7,1fr);text-align:center;row-gap:6px}
+  .cdow{font-size:11.5px;color:var(--faint);padding:6px 0;font-weight:600}
+  .cd{width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:13.5px;
+    border-radius:50%;cursor:pointer;margin:0 auto;color:var(--ink)}
+  .cd:hover{background:#F1EBD8}
+  .cd.dim{color:#C9C4B0;pointer-events:none}
+  .cd.sel{background:var(--accent);font-weight:700}
+  .cd.today{box-shadow:inset 0 0 0 1.5px #C9B96A}
+  .timecard{background:var(--inner);border-radius:20px;padding:16px;text-align:center;margin-bottom:4px}
+  .tlabel{font-size:11px;letter-spacing:2.5px;color:var(--muted);font-weight:600;margin-bottom:8px}
+  .trow{display:flex;align-items:center;justify-content:center;gap:16px}
+  .tcol{display:flex;flex-direction:column;align-items:center}
+  .tval{font-family:'Playfair Display',serif;font-size:36px;font-weight:600;
+    border-bottom:2px solid #D9D2B8;padding:0 12px 2px;min-width:78px}
+  .step{background:none;border:none;cursor:pointer;color:var(--faint);font-size:11px;padding:4px 18px}
+  .step:hover{color:var(--ink)}
+  .colon{font-family:'Playfair Display',serif;font-size:28px;color:var(--muted);padding-bottom:14px}
+  .ok{background:var(--mint-deep);border-radius:20px;padding:24px 18px;text-align:center;
+    font-family:'Playfair Display',Georgia,serif;font-style:italic;font-size:19px;color:#2E5B3C}
+
+  /* forms */
+  .field{background:var(--inner);border-radius:20px;padding:14px 16px;margin-bottom:14px}
+  .field label{font-size:12px;color:var(--faint);display:block;margin-bottom:5px}
+  .field b{font-size:16px;font-weight:600}
+  .field input,.field textarea{width:100%;border:none;background:transparent;outline:none;
+    font:inherit;font-size:15px;color:var(--ink);resize:none}
+  .field textarea{min-height:128px}
+  .field input::placeholder,.field textarea::placeholder{color:var(--faint)}
+
+  .note{background:#F7E3EA;border-radius:16px;padding:14px 16px;font-size:13.5px;color:#7c4560;margin-bottom:14px}
+  .card{background:var(--inner);border-radius:20px;padding:16px 18px;margin-bottom:14px}
+  .card h4{font-family:'Playfair Display',serif;font-style:italic;font-size:17px;margin-bottom:10px}
+  .card p{font-size:14px;line-height:1.55;color:#55524a}
+  .card ol{padding-left:20px;font-size:14px;line-height:1.8;color:#55524a}
+
+  /* profile */
+  .phead{display:flex;align-items:center;gap:14px;margin:8px 2px 16px}
+  .avatar{width:62px;height:62px;border-radius:50%;background:var(--accent);flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Playfair Display',serif;font-style:italic;font-size:21px;font-weight:700}
+  .avatar.sm{width:40px;height:40px;font-size:14px}
+  .phead h2{font-size:24px}
+  .phead small{display:block;color:var(--muted);font-size:13px;margin-top:3px}
+  .menu{background:var(--inner);border-radius:20px;overflow:hidden;margin-bottom:16px}
+  .mrow{display:flex;align-items:center;gap:12px;padding:13px 14px;border-bottom:1px solid #F0EBD8;
+    cursor:pointer;font-size:14.5px;font-weight:500;background:none;border-left:none;border-right:none;
+    border-top:none;width:100%;text-align:left;font-family:inherit;color:var(--ink)}
+  .mrow:last-child{border-bottom:none}
+  .mrow:active{background:#F3EEDC}
+  .mi{width:34px;height:34px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .mi.y{background:var(--accent)} .mi.m{background:var(--mint-deep)} .mi.p{background:var(--pink)}
+  .mi.b{background:var(--blue)} .mi.t{background:var(--taupe)}
+  .dot{background:#E2738F;color:#fff;border-radius:99px;font-size:10.5px;font-weight:700;
+    padding:2.5px 8px;margin-left:auto}
+  .chev{margin-left:auto;color:#C2BCA6;display:flex}
+  .dot + .chev{margin-left:8px}
+
+  .msg{display:flex;gap:12px;background:var(--inner);border-radius:18px;padding:13px 14px;
+    margin-bottom:10px;cursor:pointer;align-items:flex-start}
+  .msg:active{transform:scale(.985)}
+  .msg.unread{box-shadow:inset 0 0 0 1.5px #E8DEA8}
+  .msg b{font-size:14px;display:block}
+  .msg p{font-size:13px;color:var(--muted);margin-top:3px;line-height:1.45}
+  .msg time{font-size:11px;color:var(--faint);white-space:nowrap;margin-left:auto;flex-shrink:0}
+
+  .rec{display:flex;gap:12px;background:var(--inner);border-radius:16px;padding:12px 14px;
+    margin-bottom:10px;align-items:center;cursor:pointer}
+  .rec:active{transform:scale(.985)}
+  .rec b{font-size:14.5px;font-family:'Playfair Display',serif;font-style:italic}
+  .rec small{display:block;color:var(--muted);font-size:12.5px;margin-top:2px}
+
+  .hrow{display:flex;align-items:center;gap:12px;padding:11px 4px;border-bottom:1px solid #EFE9D6}
+  .hrow:last-child{border-bottom:none}
+  .hicon{width:36px;height:36px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;
+    justify-content:center;font-size:13px;font-weight:700;font-family:'Playfair Display',serif;font-style:italic}
+  .hrow b{font-size:13.5px;display:block}
+  .hrow small{color:var(--muted);font-size:12px}
+  .hrow time{margin-left:auto;font-size:11px;color:var(--faint);white-space:nowrap}
+
+  .chip{background:var(--inner);border:1px solid #E6DFC8;border-radius:999px;padding:10px 18px;
+    font-size:14px;cursor:pointer;font-family:inherit;color:var(--ink);transition:transform .12s}
+  .chip:active{transform:scale(.96)}
+  .empty{text-align:center;color:var(--faint);padding:30px 10px;font-size:13.5px;line-height:1.6}
+
+  /* tabbar */
+  .tabbar{position:absolute;left:0;right:0;bottom:0;height:94px;background:#FBF7E9;z-index:40;
+    display:flex;justify-content:space-around;padding-top:14px;
+    box-shadow:0 -10px 26px rgba(120,110,80,.09);border-radius:0 0 41px 41px}
+  .tabbar.hidden{display:none}
+  .tab{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11px;color:var(--faint);
+    width:70px;background:none;border:none;cursor:pointer;font-family:inherit}
+  .tab.active{color:var(--ink)}
+  .scanbtn{width:60px;height:60px;border-radius:50%;background:var(--accent);cursor:pointer;
+    border:6px solid #FBF7E9;margin-top:-32px;display:flex;align-items:center;justify-content:center;
+    box-shadow:0 8px 16px rgba(160,140,60,.28);transition:transform .12s}
+  .scanbtn:active{transform:scale(.93)}
+
+  /* scan overlay */
+  .scanlay{position:absolute;inset:0;background:linear-gradient(180deg,#DCE8D8 0%,#F7F2E4 75%);z-index:80;
+    display:none;flex-direction:column;align-items:center;padding:70px 24px 30px}
+  .scanlay.on{display:flex;animation:rise .2s ease}
+  .sframe{width:225px;height:225px;border-radius:26px;position:relative;margin:34px 0 26px}
+  .sframe i{position:absolute;width:34px;height:34px;border:3.5px solid #55604d;border-radius:6px}
+  .sframe i:nth-child(1){top:0;left:0;border-right:none;border-bottom:none}
+  .sframe i:nth-child(2){top:0;right:0;border-left:none;border-bottom:none}
+  .sframe i:nth-child(3){bottom:0;left:0;border-right:none;border-top:none}
+  .sframe i:nth-child(4){bottom:0;right:0;border-left:none;border-top:none}
+  .sline{position:absolute;left:14px;right:14px;height:3px;border-radius:3px;background:#E3CF5B;
+    box-shadow:0 0 10px #E3CF5B;animation:scan 2.1s ease-in-out infinite}
+  @keyframes scan{0%,100%{top:10%}50%{top:88%}}
+  .stext{color:#6a7261;font-size:13.5px;text-align:center;line-height:1.6;margin-bottom:22px}
+  .scan-h{font-size:26px;margin-bottom:4px}
+
+  /* modal */
+  .modal{position:absolute;inset:0;background:rgba(40,38,30,.38);z-index:85;display:none;align-items:flex-end}
+  .modal.on{display:flex}
+  .sheet{background:var(--bg);border-radius:26px 26px 0 0;width:100%;padding:20px 18px 30px;
+    max-height:76%;overflow-y:auto;animation:up .22s ease}
+  @keyframes up{from{transform:translateY(40px);opacity:.4}to{transform:none;opacity:1}}
+  .sheet h3{font-family:'Playfair Display',serif;font-style:italic;font-size:22px;margin-bottom:14px}
+
+  .toast{position:absolute;left:50%;bottom:112px;transform:translateX(-50%) translateY(12px);
+    background:#33322C;color:#FBF7E9;padding:11px 20px;border-radius:999px;font-size:13px;
+    opacity:0;transition:.25s;z-index:95;pointer-events:none;max-width:82%;text-align:center}
+  .toast.on{opacity:1;transform:translateX(-50%)}
+
+  .amtrow{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+  .amtrow .field{flex:1;margin:0}
+  .chiprow{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  @media (max-height:920px){.phone{transform:scale(.92)}}
+  @media (max-height:840px){.phone{transform:scale(.84)}}
+  @media (max-height:760px){.phone{transform:scale(.76)}}
+</style>
+</head>
+<body>
+
+<div class="phone"><div class="screen">
+  <div class="island"></div>
+
+  <!-- ============ LOGIN ============ -->
+  <section class="scr bare on" id="s-login">
+    <div style="text-align:center;margin-top:66px">
+      <div style="width:74px;height:74px;border-radius:50%;background:var(--accent);margin:0 auto 16px;
+        display:flex;align-items:center;justify-content:center">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#4d4413" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10 3h4M11 3v5.5L5.8 17a3 3 0 0 0 2.6 4.5h7.2A3 3 0 0 0 18.2 17L13 8.5V3"/>
+          <path d="M7.5 14.5h9"/>
+        </svg>
+      </div>
+      <h1 class="serif" style="font-size:44px">LabSlot</h1>
+      <p style="color:var(--muted);font-size:13.5px;margin:6px 0 30px">Lab equipment &amp; reagents, one tap away.</p>
+    </div>
+    <div class="field"><label>Username</label><input id="l-user" placeholder="e.g. stina.levin" autocomplete="off"></div>
+    <div class="field"><label>Password</label><input id="l-pass" type="password" placeholder="••••••••"></div>
+    <button class="bigpill" style="margin-top:22px" id="btn-login">Sign In</button>
+    <p style="text-align:center;color:var(--faint);font-size:12px;margin:24px 0 12px;letter-spacing:.4px">— or continue with —</p>
+    <div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap" id="saved-accts"></div>
+  </section>
+
+  <!-- ============ HOME ============ -->
+  <section class="scr" id="s-home">
+    <p class="hello">Hello, <span id="h-name">Stina</span> !</p>
+    <h1 class="serif brand">LabSlot</h1>
+
+    <div class="sec mint">
+      <div class="sec-head"><div class="sec-band"><h2 class="serif sec-title">Instruments</h2></div></div>
+      <div class="search">
+        <input id="q-e" placeholder="Search instruments...">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#8A8878" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      </div>
+      <div id="list-e"></div>
+    </div>
+
+    <div class="sec yellow">
+      <div class="sec-head"><div class="sec-band"><h2 class="serif sec-title">Reagents</h2></div></div>
+      <div class="search">
+        <input id="q-r" placeholder="Search reagents...">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#8A8878" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      </div>
+      <div id="list-r"></div>
+    </div>
+  </section>
+
+  <!-- ============ DYNAMIC SCREENS ============ -->
+  <section class="scr" id="s-equip"></section>
+  <section class="scr" id="s-reag"></section>
+  <section class="scr" id="s-resv"></section>
+  <section class="scr" id="s-msg"></section>
+  <section class="scr" id="s-instr"></section>
+  <section class="scr" id="s-profile"></section>
+  <section class="scr" id="s-inbox"></section>
+  <section class="scr" id="s-appts"></section>
+  <section class="scr" id="s-history"></section>
+  <section class="scr" id="s-switch"></section>
+
+  <!-- ============ TABBAR ============ -->
+  <nav class="tabbar hidden" id="tabbar">
+    <button class="tab active" id="tab-home">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-4.5v-6h-5v6H5a1 1 0 0 1-1-1Z"/></svg>
+      Home</button>
+    <button class="scanbtn" id="btn-scan" aria-label="Scan">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4d4413" stroke-width="2.1" stroke-linecap="round"><path d="M4 8V5.5A1.5 1.5 0 0 1 5.5 4H8M16 4h2.5A1.5 1.5 0 0 1 20 5.5V8M20 16v2.5a1.5 1.5 0 0 1-1.5 1.5H16M8 20H5.5A1.5 1.5 0 0 1 4 18.5V16"/><path d="M12 8.5v7M8.5 12h7"/></svg>
+    </button>
+    <button class="tab" id="tab-profile">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c1.2-3.4 3.8-5 7-5s5.8 1.6 7 5"/></svg>
+      Profile</button>
+  </nav>
+
+  <!-- ============ SCAN OVERLAY ============ -->
+  <div class="scanlay" id="scanlay">
+    <button class="back" style="align-self:flex-start" onclick="closeScan()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m14 6-6 6 6 6"/></svg>Close</button>
+    <h2 class="serif scan-h">Scan Code</h2>
+    <p style="color:var(--muted);font-size:13px">Equipment QR · Reagent bottle tag</p>
+    <div class="sframe"><i></i><i></i><i></i><i></i><div class="sline"></div></div>
+    <p class="stext">Point the camera at the QR code on the device<br>or the tag on a reagent bottle.</p>
+    <p style="font-size:11px;letter-spacing:2px;color:var(--faint);font-weight:600;margin-bottom:10px">DEMO — SIMULATE A SCAN</p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center" id="scan-chips"></div>
+  </div>
+
+  <!-- ============ MODAL ============ -->
+  <div class="modal" id="modal"><div class="sheet" id="sheet"></div></div>
+
+  <div class="toast" id="toast"></div>
+</div></div>
+
+<script>
+/* ================= data ================= */
+const EQUIP=[
+ {id:'hplc',name:'HPLC',brand:'Agilent',model:'1260 Infinity',loc:'3F Lab H01',coord:'3F-H01-1',
+  status:'Available',holder:null,art:'hplc',
+  desc:'High-performance liquid chromatograph with quaternary pump and diode-array detector for separation and quantification of compounds.',
+  steps:['Prime the pump with your mobile phase and purge air bubbles.','Create a sequence and load the gradient method.','Inject the sample and monitor the chromatogram.','Flush the system with methanol/water after the run.'],
+  safety:'Handle organic solvents in a fume hood and collect liquid waste properly.'},
+ {id:'icpms',name:'ICP-MS',brand:'Thermo Fisher',model:'iCAP RQ',loc:'3F Lab H02',coord:'3F-H02-1',
+  status:'Available',holder:null,art:'tower',
+  desc:'Inductively coupled plasma mass spectrometer for ultra-trace multi-element analysis of water, food and biological samples.',
+  steps:['Ignite the plasma and let it stabilize for 30 min.','Run the tuning solution and check sensitivity.','Prepare samples in 2% nitric acid.','Run calibration standards before your samples.'],
+  safety:'Hot plasma and argon lines \u2014 certified users only.'},
+ {id:'gc',name:'Gas Chromatograph',brand:'Shimadzu',model:'GC-2010 Plus',loc:'3F Lab H02',coord:'3F-H02-2',
+  status:'Available',holder:null,art:'tower',
+  desc:'Gas chromatograph with FID detector for analysis of volatile organic compounds and solvents.',
+  steps:['Turn on the gases and check the pressure readings.','Install the column and set the oven program.','Inject the sample via autosampler or manually.','Cool the oven and log the run in the book.'],
+  safety:'Leak-check hydrogen and carrier gas lines before ignition.'},
+ {id:'gcms',name:'GC-MS',brand:'Thermo Fisher',model:'Trace 1300-ISQ LT',loc:'3F Lab H02',coord:'3F-H02-3',
+  status:'Available',holder:null,art:'tower',
+  desc:'Gas chromatograph coupled to a single-quadrupole mass spectrometer for identification of volatile compounds.',
+  steps:['Confirm the vacuum is stable before starting.','Set the GC program and MS scan range.','Run a solvent blank before your samples.','Identify peaks with the library search.'],
+  safety:'Never vent the MS without following the shutdown procedure.'},
+ {id:'gel',name:'Gel Imaging System',brand:'Bio-Rad',model:'Gel Doc XR+',loc:'4F Lab M01',coord:'4F-M01-1',
+  status:'Available',holder:null,art:'screen',
+  desc:'Gel documentation system with UV and white-light transilluminators for imaging agarose and polyacrylamide gels.',
+  steps:['Place the gel on the transilluminator stage.','Select UV or white-light mode.','Focus, set exposure and capture the image.','Export the image and wipe the stage clean.'],
+  safety:'Wear a UV face shield whenever the UV lamp is on.'},
+ {id:'pcr',name:'PCR Amplifier',brand:'Thermo Fisher',model:'\u2014',loc:'4F Lab M02',coord:'4F-M02-1',
+  status:'Available',holder:null,art:'pcr',
+  desc:'Thermal cycler for endpoint PCR amplification of nucleic acids.',
+  steps:['Program or select the temperature profile.','Load tubes with lids tightly closed.','Start the run and check the lid temperature.','Retrieve samples once the run completes.'],
+  safety:'The heated lid reaches 105 \u00B0C \u2014 let it cool before unloading.'},
+ {id:'cyto',name:'Flow Cytometer',brand:'BD Biosciences',model:'Accuri C6 Plus',loc:'4F Lab M02',coord:'4F-M02-2',
+  status:'Available',holder:null,art:'cyto',
+  desc:'A benchtop flow cytometer for cell counting and biomarker detection. Ideal for routine immunophenotyping and GFP expression assays.',
+  steps:['Turn on the power and wait for fluidics to prime (about 3 min).','Log in on the panel and create a new experiment file.','Load your sample tube and run QC beads first.','Acquire data, then run cleaning solution after use.'],
+  safety:'Wear gloves and lab coat. Dispose of waste in the labelled container next to the unit.'},
+ {id:'spec',name:'Micro-Volume Spectrophotometer',brand:'Thermo Fisher',model:'\u2014',loc:'5F Lab A01',coord:'5F-A01-1',
+  status:'Available',holder:null,art:'screen',
+  desc:'Micro-volume UV-Vis spectrophotometer for quick nucleic-acid and protein quantification (A260/A280).',
+  steps:['Wipe the pedestal and pipette 1\u20132 \u00B5L of sample.','Select the assay: DNA, RNA or protein.','Measure and note concentration and purity ratios.','Clean the pedestal with water after use.'],
+  safety:'Do not scratch the optical pedestal.'},
+ {id:'visia',name:'Facial Skin Imaging Analyzer',brand:'Canfield',model:'VISIA-CR',loc:'2F Skin Lab S01',coord:'2F-S01-1',
+  status:'Available',holder:null,art:'screen',
+  desc:'Standardized facial imaging system capturing visible, UV and cross-polarized photos for skin analysis.',
+  steps:['Register the subject and set the chin rest.','Align the face with the mirrored guides.','Capture the image series in each mode.','Review and export the analysis report.'],
+  safety:'Disinfect the headrest after every subject.'},
+ {id:'skin',name:'Multi-Function Skin Tester',brand:'CK',model:'MPA580',loc:'2F Skin Lab S01',coord:'2F-S01-2',
+  status:'Available',holder:null,art:'scope',
+  desc:'Multi-probe system measuring sebum, moisture, pH, elasticity and other skin parameters.',
+  steps:['Select a probe and calibrate if required.','Let the subject acclimatize 20 min at 21 \u00B0C.','Place the probe on the marked test site.','Record the reading for each probe.'],
+  safety:'Disinfect probes between subjects.'},
+ {id:'dls',name:'Particle Size Analyzer',brand:'Brookhaven',model:'\u2014',loc:'3F Lab H03',coord:'3F-H03-1',
+  status:'Available',holder:null,art:'spin',
+  desc:'Dynamic light-scattering system for particle size distribution and stability of suspensions.',
+  steps:['Filter the dispersant and dilute the sample.','Load the cuvette into the holder.','Run the measurement at 25 \u00B0C.','Check the polydispersity index before saving.'],
+  safety:'Use clean, bubble-free cuvettes.'},
+];
+const REAG=[
+ {id:'pbs',name:'PBS (10\u00D7)',brand:'Gibco',cap:500,vol:320,lab:'5F Lab',cab:'Cabinet C1',shelf:'Shelf 2',
+  desc:'Phosphate-buffered saline, 10\u00D7 concentrate. Dilute to 1\u00D7 with sterile water before use.',
+  steps:['Dilute 1 part concentrate with 9 parts sterile water.','Mix gently and store diluted stock at 4 \u00B0C.']},
+ {id:'eth',name:'Ethanol 99.9%',brand:'Sigma-Aldrich',cap:1000,vol:150,lab:'4F Lab',cab:'Cabinet A2',shelf:'Shelf 1',
+  desc:'Absolute ethanol for molecular biology, nuclease-free.',
+  steps:['Dispense in a fume hood.','Keep the bottle tightly closed \u2014 hygroscopic.']},
+ {id:'dmem',name:'DMEM High Glucose',brand:'Gibco',cap:500,vol:500,lab:'5F Lab',cab:'Cabinet C1',shelf:'Shelf 1',
+  desc:'Dulbecco\u2019s Modified Eagle Medium, high glucose, with L-glutamine. Supplement with FBS before use.',
+  steps:['Warm to 37 \u00B0C in a water bath before use.','Add 10% FBS and 1% penicillin-streptomycin.']},
+ {id:'trizol',name:'TRIzol Reagent',brand:'Invitrogen',cap:100,vol:42,lab:'4F Lab',cab:'Cabinet B3',shelf:'Shelf 3',
+  desc:'Single-step RNA isolation reagent for total RNA extraction from cells and tissue.',
+  steps:['Use 1 mL per 10 cm\u00B2 of culture area.','Phase-separate with chloroform, then precipitate RNA with isopropanol.']},
+];
+const ACCOUNTS=[
+ {name:'Stina Levin',role:'PhD Student',lab:'Molecular Biology Lab \u00B7 5F',email:'stina.levin@uni.edu',initials:'SL'},
+ {name:'Dr. Alex Ivanov',role:'Lab Manager',lab:'Molecular Biology Lab \u00B7 5F',email:'a.ivanov@uni.edu',initials:'AI'},
+ {name:'Ming Chen',role:'Research Assistant',lab:'Biochemistry Lab \u00B7 4F',email:'m.chen@uni.edu',initials:'MC'},
+];
+const MON=['January','February','March','April','May','June','July','August','September','October','November','December'];
+const BCLASS={'Available':'b-avl','In Use':'b-use','Maintenance':'b-mnt','Reserved':'b-rsv'};
+
+const state={
+  user:null, stack:[], cur:'s-login', unread:2,
+  appts:[], hist:[],
+  msgs:[
+   {from:'Lab Manager',ini:'AI',col:'#CDE4CE',text:'Your reservation for the GC-MS has been approved. Please arrive on time for your slot.',time:'Yesterday \u00B7 16:40',read:false},
+   {from:'Ming Chen',ini:'MC',col:'#F2CFDB',text:'Hi! Is the ICP-MS free tomorrow morning? I need one quick measurement at 9.',time:'Today \u00B7 08:12',read:false},
+  ]
+};
+/* seed appointments + history relative to today */
+const _d=o=>new Date(Date.now()+o*864e5);
+const fdate=d=>`${MON[d.getMonth()].slice(0,3)} ${d.getDate()}`;
+state.appts=[
+ {item:'GC-MS',date:fdate(_d(1)),time:'14:00',status:'Upcoming'},
+ {item:'HPLC',date:fdate(_d(-6)),time:'10:30',status:'Completed'},
+];
+state.hist=[
+ {item:'PBS (10\u00D7)',act:'Collected 50 mL',time:'Today \u00B7 09:14',k:'y'},
+ {item:'PCR Amplifier',act:'Returned',time:'Yesterday \u00B7 17:26',k:'b'},
+ {item:'GC-MS',act:'Reserved',time:'Yesterday \u00B7 15:02',k:'p'},
+ {item:'Ethanol 99.9%',act:'Collected 200 mL',time:fdate(_d(-3))+' \u00B7 11:40',k:'y'},
+];
+
+/* ================= helpers ================= */
+const $=s=>document.querySelector(s);
+const pad=n=>String(n).padStart(2,'0');
+const esc=s=>s.replace(/</g,'&lt;');
+function badge(st){return `<span class="badge ${BCLASS[st]||'b-avl'}">${st}</span>`}
+let toastT;
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toastT);
+  toastT=setTimeout(()=>t.classList.remove('on'),2200)}
+function addHist(item,act){const n=new Date();
+  state.hist.unshift({item,act,time:`Today \u00B7 ${pad(n.getHours())}:${pad(n.getMinutes())}`,k:act.startsWith('Collect')?'y':act==='Reserved'?'p':act==='Returned'?'b':'m'})}
+
+/* navigation */
+function show(id){
+  document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));
+  const el=document.getElementById(id); el.classList.add('on'); el.scrollTop=0;
+  state.cur=id;
+  $('#tabbar').classList.toggle('hidden',id==='s-login');
+  if(id==='s-home')renderHome();
+  if(id==='s-profile')renderProfile();
+}
+function go(id){if(state.cur!==id)state.stack.push(state.cur);show(id)}
+function navBack(){show(state.stack.pop()||'s-home')}
+function setTab(id,btn){state.stack=[];document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');show(id)}
+
+/* cute illustrations */
+function art(type,w=180){
+ const S='stroke="#7A7660" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"';
+ const m={
+  cyto:`<rect x="30" y="34" width="95" height="76" rx="13" fill="#F1ECDA" ${S}/><rect x="45" y="48" width="34" height="23" rx="6" fill="#CFE3CF" ${S}/><circle cx="103" cy="59" r="9" fill="#FBF8EC" ${S}/><rect x="45" y="88" width="56" height="9" rx="4.5" fill="#EFE17C"/><rect x="128" y="54" width="35" height="56" rx="11" fill="#F1ECDA" ${S}/><circle cx="146" cy="38" r="9" fill="#EFE17C" ${S}/>`,
+  scope:`<rect x="56" y="102" width="82" height="13" rx="6.5" fill="#F1ECDA" ${S}/><path d="M82 102 C72 72 92 56 114 54" fill="none" ${S}/><rect x="106" y="36" width="15" height="38" rx="7" fill="#CFE3CF" ${S}/><rect x="101" y="22" width="25" height="13" rx="5.5" fill="#EFE17C" ${S}/><rect x="66" y="82" width="46" height="9" rx="4.5" fill="#F1ECDA" ${S}/><circle cx="150" cy="94" r="8" fill="#EFE17C" ${S}/>`,
+  spin:`<rect x="42" y="42" width="116" height="70" rx="16" fill="#F1ECDA" ${S}/><rect x="42" y="42" width="116" height="20" rx="10" fill="#CFE3CF" ${S}/><circle cx="70" cy="80" r="9" fill="#EFE17C" ${S}/><rect x="88" y="76" width="30" height="9" rx="4.5" fill="#F1ECDA" ${S}/><circle cx="136" cy="88" r="14" fill="#CFE3CF" ${S}/><circle cx="136" cy="88" r="4" fill="#FBF8EC" ${S}/>`,
+  incu:`<rect x="62" y="26" width="80" height="94" rx="14" fill="#F1ECDA" ${S}/><rect x="74" y="44" width="40" height="36" rx="8" fill="#CFE3CF" ${S}/><circle cx="126" cy="52" r="8" fill="#EFE17C" ${S}/><path d="M74 96h56" ${S}/><rect x="84" y="120" width="10" height="8" rx="3" fill="#7A7660"/><rect x="110" y="120" width="10" height="8" rx="3" fill="#7A7660"/>`,
+  pcr:`<rect x="40" y="46" width="120" height="62" rx="14" fill="#F1ECDA" ${S}/><rect x="40" y="28" width="120" height="18" rx="9" fill="#CFE3CF" ${S}/><circle cx="60" cy="72" r="6" fill="#EFE17C"/><circle cx="78" cy="72" r="6" fill="#CFE3CF"/><circle cx="96" cy="72" r="6" fill="#EFE17C"/><circle cx="114" cy="72" r="6" fill="#CFE3CF"/><rect x="58" y="88" width="60" height="9" rx="4.5" fill="#EFE17C"/><circle cx="140" cy="92" r="8" fill="#F1ECDA" ${S}/>`,
+  bottle:`<rect x="86" y="14" width="28" height="14" rx="5" fill="#CFE3CF" ${S}/><rect x="62" y="32" width="76" height="88" rx="18" fill="#F1ECDA" ${S}/><rect x="70" y="84" width="60" height="30" rx="12" fill="#EFE17C" opacity=".75"/><rect x="72" y="54" width="56" height="22" rx="8" fill="#CFE3CF" ${S}/>`,
+  hplc:`<rect x="50" y="12" width="27" height="25" rx="5" fill="#CFE3CF" ${S}/><rect x="83" y="12" width="27" height="25" rx="5" fill="#EFE17C" ${S}/><rect x="42" y="40" width="114" height="76" rx="14" fill="#F1ECDA" ${S}/><rect x="56" y="54" width="52" height="21" rx="6" fill="#CFE3CF" ${S}/><circle cx="132" cy="64" r="9" fill="#FBF8EC" ${S}/><rect x="56" y="88" width="86" height="9" rx="4.5" fill="#EFE17C"/>`,
+  tower:`<rect x="70" y="16" width="60" height="102" rx="12" fill="#F1ECDA" ${S}/><rect x="82" y="32" width="36" height="27" rx="6" fill="#CFE3CF" ${S}/><rect x="82" y="68" width="36" height="8" rx="4" fill="#EFE17C"/><path d="M82 88h36M82 98h36" ${S}/><circle cx="100" cy="110" r="5" fill="#EFE17C" ${S}/>`,
+  screen:`<rect x="40" y="44" width="120" height="72" rx="14" fill="#F1ECDA" ${S}/><rect x="54" y="56" width="66" height="48" rx="8" fill="#DDE7DA" ${S}/><rect x="60" y="84" width="30" height="12" rx="4" fill="#EFE17C"/><circle cx="140" cy="62" r="8" fill="#EFE17C" ${S}/><rect x="130" y="88" width="22" height="9" rx="4.5" fill="#CFE3CF"/>`
+ }[type];
+ return `<svg width="${w}" height="${Math.round(w*.72)}" viewBox="0 0 200 144">${m}</svg>`;
+}
+const IC={
+ msg:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#4d4413" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16v11H8l-4 3.5Z"/></svg>',
+ cal:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#2E5B3C" stroke-width="2" stroke-linecap="round"><rect x="4" y="5.5" width="16" height="15" rx="3"/><path d="M8 3.5v4M16 3.5v4M4 10.5h16"/></svg>',
+ clk:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#33586B" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2.5"/></svg>',
+ lock:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8A3B58" stroke-width="2" stroke-linecap="round"><rect x="5" y="10.5" width="14" height="10" rx="3"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"/></svg>',
+ swap:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#4d4636" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v13M7 4 4 7.5M7 4l3 3.5M17 20V7M17 20l3-3.5M17 20l-3-3.5"/></svg>',
+ out:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8A3B58" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h4.5A1.5 1.5 0 0 1 20 5.5v13a1.5 1.5 0 0 1-1.5 1.5H14M10 8l-4 4 4 4M6 12h10"/></svg>',
+ chev:'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg>',
+};
+
+/* ================= home ================= */
+function renderHome(){
+ if(state.user)$('#h-name').textContent=state.user.name.split(' ')[0];
+ const qe=$('#q-e').value.trim().toLowerCase();
+ const listE=EQUIP.filter(e=>(e.name+e.brand+e.model).toLowerCase().includes(qe));
+ $('#list-e').innerHTML=listE.length?listE.map(e=>`
+   <div class="item" data-e="${e.id}">
+     <div><b>${e.name}</b><small>${e.brand} \u00B7 ${e.model}</small></div>${badge(e.status)}
+   </div>`).join('')
+  :`<div class="empty">No instruments match \u201C${esc(qe)}\u201D.<br>Try \u201CFlow\u201D or \u201CSpin\u201D.</div>`;
+ const qr=$('#q-r').value.trim().toLowerCase();
+ const listR=REAG.filter(r=>(r.name+r.brand).toLowerCase().includes(qr));
+ $('#list-r').innerHTML=listR.length?listR.map(r=>{
+   const pct=Math.round(r.vol/r.cap*100);
+   return `<div class="item" data-r="${r.id}">
+     <div style="flex:1"><b>${r.name}</b><small>${r.brand}</small></div>
+     <div class="bar"><i style="width:${pct}%"></i></div><span class="pct">${pct}%</span>
+   </div>`}).join('')
+  :`<div class="empty">No reagents match \u201C${esc(qr)}\u201D.</div>`;
+ document.querySelectorAll('#list-e .item').forEach(el=>el.onclick=()=>openEquip(el.dataset.e));
+ document.querySelectorAll('#list-r .item').forEach(el=>el.onclick=()=>openReag(el.dataset.r));
+}
+$('#q-e').addEventListener('input',renderHome);
+$('#q-r').addEventListener('input',renderHome);
+
+/* ================= equipment detail ================= */
+function openEquip(id){
+ const e=EQUIP.find(x=>x.id===id);
+ const mine=e.status==='In Use'&&e.holder===state.user?.name;
+ $('#s-equip').innerHTML=`
+  <button class="back" onclick="navBack()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m14 6-6 6 6 6"/></svg>Back</button>
+  <div class="d-head">
+    <div><h1 class="serif d-title">${e.name}</h1><p class="d-sub">${e.brand} \u00B7 ${e.model}</p></div>
+    <div class="d-meta"><div class="d-coord">${e.coord}</div>${badge(e.status)}</div>
+  </div>
+  <div class="artcard">${art(e.art)}</div>
+  <div class="info">
+    <div class="row"><span>Manufacturer</span><b>${e.brand}</b></div>
+    <div class="row"><span>Model</span><b>${e.model}</b></div>
+    <div class="row"><span>Location</span><b>${e.loc}</b></div>
+    <div class="row"><span>Coordinates</span><b>${e.coord}</b></div>
+    <div class="row"><span>Status</span><b>${e.status}${e.holder?` \u00B7 ${e.holder}`:''}</b></div>
+  </div>
+  <div class="pills">
+    <button class="pill p-yellow" id="a-use">Use</button>
+    <button class="pill p-blue" id="a-ret" ${mine?'':'disabled'}>Return</button>
+    <button class="pill p-pink" id="a-rsv">Reservation</button>
+    <button class="pill p-mint" id="a-msg">Contact the user</button>
+    <button class="pill p-taupe" id="a-ins">Instructions</button>
+    <button class="pill p-mint" id="a-oth">Others available</button>
+  </div>`;
+ $('#a-use').onclick=()=>{
+   if(e.status==='Maintenance')return toast('Under maintenance \u2014 please wait');
+   if(e.status==='In Use')return toast(`Currently in use by ${e.holder}`);
+   if(e.status==='Reserved')return toast('Available at your reserved slot');
+   e.status='In Use';e.holder=state.user.name;addHist(e.name,'Started using');
+   toast('Session started \u2014 remember to return');openEquip(id);};
+ $('#a-ret').onclick=()=>{
+   if(!mine)return toast('Nothing to return');
+   e.status='Available';e.holder=null;addHist(e.name,'Returned');
+   toast('Returned \u2014 thanks!');openEquip(id);};
+ $('#a-rsv').onclick=()=>openResv(id);
+ $('#a-msg').onclick=()=>openMsg(e.name);
+ $('#a-ins').onclick=()=>openInstr({name:e.name,desc:e.desc,steps:e.steps,safety:e.safety});
+ $('#a-oth').onclick=()=>{
+   const av=EQUIP.filter(x=>x.status==='Available'&&x.id!==id);
+   openModal(`<h3>Others available</h3>${av.length?av.map(x=>`
+     <div class="rec" data-e="${x.id}"><div style="flex-shrink:0">${art(x.art,86)}</div>
+       <div><b>${x.name}</b><small>${x.brand} \u00B7 ${x.model}</small></div></div>`).join('')
+    :`<div class="empty">Everything else is busy right now.</div>`}`);
+   document.querySelectorAll('#sheet .rec').forEach(el=>el.onclick=()=>{closeModal();openEquip(el.dataset.e)});};
+ go('s-equip');
+}
+
+/* ================= reagent detail ================= */
+function openReag(id){
+ const r=REAG.find(x=>x.id===id);
+ const pct=Math.round(r.vol/r.cap*100);
+ $('#s-reag').innerHTML=`
+  <button class="back" onclick="navBack()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m14 6-6 6 6 6"/></svg>Back</button>
+  <div class="d-head">
+    <div><h1 class="serif d-title">${r.name}</h1><p class="d-sub">${r.brand}</p></div>
+    <div class="d-meta"><div class="d-coord">${r.cab}</div><span class="badge ${pct>30?'b-avl':'b-mnt'}">${pct>30?'In stock':'Low'}</span></div>
+  </div>
+  <div class="artcard">${art('bottle')}</div>
+  <div class="info">
+    <div class="row"><span>Manufacturer</span><b>${r.brand}</b></div>
+    <div class="row"><span>Total capacity</span><b>${r.cap} mL</b></div>
+    <div class="row"><span>Remaining</span><b>${r.vol} mL (${pct}%)</b></div>
+    <div class="row"><span>Lab</span><b>${r.lab}</b></div>
+    <div class="row"><span>Cabinet</span><b>${r.cab}</b></div>
+    <div class="row"><span>Shelf</span><b>${r.shelf}</b></div>
+  </div>
+  <div class="card" style="padding:14px 18px">
+    <div style="display:flex;align-items:center;gap:12px">
+      <div class="bar" style="flex:1;width:auto"><i style="width:${pct}%"></i></div>
+      <span class="pct">${pct}%</span>
+    </div>
+  </div>
+  ${r.vol===0?`<div class="note">Bottle is empty \u2014 collect after a refill is logged by the lab manager.</div>`
+   :`<div class="card"><h4>Collect reagent</h4>
+      <div class="amtrow"><div class="field" style="padding:10px 14px"><label>Amount (mL)</label>
+        <input id="amt" type="number" min="1" placeholder="e.g. 50"></div></div>
+      <div class="chiprow">${[10,25,50,100].map(v=>`<button class="chip" data-v="${v}">${v} mL</button>`).join('')}</div>
+      <button class="bigpill" style="margin-top:2px" id="a-col">Collect</button>
+    </div>`}
+  <div class="pills" style="margin-top:16px">
+    <button class="pill p-taupe" id="r-ins">Instructions</button>
+    <button class="pill p-mint" id="r-msg">Contact the user</button>
+  </div>`;
+ document.querySelectorAll('#s-reag .chip').forEach(c=>c.onclick=()=>{$('#amt').value=c.dataset.v});
+ if($('#a-col'))$('#a-col').onclick=()=>{
+   const v=parseFloat($('#amt').value);
+   if(!v||v<=0)return toast('Enter an amount first');
+   if(v>r.vol)return toast('Not enough left in the bottle');
+   r.vol=Math.max(0,Math.round((r.vol-v)*10)/10);
+   addHist(r.name,`Collected ${v} mL`);
+   toast(`Collected ${v} mL of ${r.name}`);openReag(id);};
+ $('#r-ins').onclick=()=>openInstr({name:r.name,desc:r.desc,steps:r.steps,safety:'Check the SDS before handling. Wear gloves.'});
+ $('#r-msg').onclick=()=>openMsg(r.name);
+ go('s-reag');
+}
+
+/* ================= reservation ================= */
+let calM,selD,hour=8,minu=0,resvItem;
+function openResv(id){
+ const e=EQUIP.find(x=>x.id===id);resvItem=e;
+ calM=new Date();selD=new Date();hour=8;minu=0;
+ drawResv(false);
+ go('s-resv');
+}
+function drawResv(done,when){
+ const e=resvItem;
+ if(done){$('#s-resv').innerHTML=`
+   <button class="back" onclick="navBack()">
+     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m14 6-6 6 6 6"/></svg>Back</button>
+   <div class="d-head"><div><h1 class="serif d-title">${e.name}</h1><p class="d-sub">${e.brand} \u00B7 ${e.model}</p></div>
+     <div class="d-meta"><div class="d-coord">${e.coord}</div>${badge(e.status)}</div></div>
+   <div style="height:26px"></div>
+   <div class="ok">Reserved for ${when} \u2713</div>
+   <button class="bigpill" onclick="navBack()">Done</button>`;
+  return;}
+ const today=new Date();today.setHours(0,0,0,0);
+ const first=new Date(calM.getFullYear(),calM.getMonth(),1);
+ const days=new Date(calM.getFullYear(),calM.getMonth()+1,0).getDate();
+ const lead=first.getDay();
+ let cells='';
+ for(let i=0;i<lead;i++)cells+='<span></span>';
+ for(let d=1;d<=days;d++){
+   const dt=new Date(calM.getFullYear(),calM.getMonth(),d);
+   const cls=['cd',dt<today?'dim':'',selD&&dt.getTime()===selD.getTime()?'sel':'',
+     dt.toDateString()===today.toDateString()?'today':''].join(' ');
+   cells+=`<span class="${cls}" data-d="${d}">${d}</span>`;}
+ $('#s-resv').innerHTML=`
+  <button class="back" onclick="navBack()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m14 6-6 6 6 6"/></svg>Back</button>
+  <div class="d-head"><div><h1 class="serif d-title">${e.name}</h1><p class="d-sub">${e.brand} \u00B7 ${e.model}</p></div>
+    <div class="d-meta"><div class="d-coord">${e.coord}</div>${badge(e.status)}</div></div>
+  <div style="height:14px"></div>
+  <div class="cal">
+    <div class="cal-head">
+      <button class="mbtn" id="m-prev">\u2039</button>
+      <h3>${MON[calM.getMonth()]} ${calM.getFullYear()}</h3>
+      <button class="mbtn" id="m-next">\u203A</button>
+    </div>
+    <div class="cgrid">${['S','M','T','W','T','F','S'].map(d=>`<span class="cdow">${d}</span>`).join('')}${cells}</div>
+  </div>
+  <div class="timecard">
+    <div class="tlabel">TIME</div>
+    <div class="trow">
+      <div class="tcol"><button class="step" id="h-up">\u25B2</button><div class="tval" id="h-v">${pad(hour)}</div><button class="step" id="h-dn">\u25BC</button></div>
+      <div class="colon">:</div>
+      <div class="tcol"><button class="step" id="m-up">\u25B2</button><div class="tval" id="m-v">${pad(minu)}</div><button class="step" id="m-dn">\u25BC</button></div>
+    </div>
+  </div>
+  <button class="bigpill" id="a-conf">Confirm Reservation</button>`;
+ $('#m-prev').onclick=()=>{calM=new Date(calM.getFullYear(),calM.getMonth()-1,1);drawResv(false)};
+ $('#m-next').onclick=()=>{calM=new Date(calM.getFullYear(),calM.getMonth()+1,1);drawResv(false)};
+ document.querySelectorAll('#s-resv .cd[data-d]').forEach(c=>c.onclick=()=>{
+   selD=new Date(calM.getFullYear(),calM.getMonth(),+c.dataset.d);drawResv(false)});
+ $('#h-up').onclick=()=>{hour=(hour+1)%24;$('#h-v').textContent=pad(hour)};
+ $('#h-dn').onclick=()=>{hour=(hour+23)%24;$('#h-v').textContent=pad(hour)};
+ $('#m-up').onclick=()=>{minu+=30;if(minu>=60){minu=0;hour=(hour+1)%24;}
+   $('#m-v').textContent=pad(minu);$('#h-v').textContent=pad(hour)};
+ $('#m-dn').onclick=()=>{minu-=30;if(minu<0){minu=30;hour=(hour+23)%24;}
+   $('#m-v').textContent=pad(minu);$('#h-v').textContent=pad(hour)};
+ $('#a-conf').onclick=()=>{
+   const when=`${MON[selD.getMonth()].slice(0,3)} ${selD.getDate()}, ${pad(hour)}:${pad(minu)}`;
+   state.appts.unshift({item:e.name,date:`${MON[selD.getMonth()].slice(0,3)} ${selD.getDate()}`,time:`${pad(hour)}:${pad(minu)}`,status:'Upcoming'});
+   e.status='Reserved';addHist(e.name,'Reserved');
+   toast('Reservation confirmed');drawResv(true,when);};
+}
+
+/* ================= message ================= */
+let msgAbout='';
+function openMsg(about){
+ msgAbout=about;
+ $('#s-msg').innerHTML=`
+  <button class="back" onclick="navBack()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m14 6-6 6 6 6"/></svg>Back</button>
+  <h1 class="serif" style="font-size:34px">Message</h1>
+  <p class="d-sub" style="margin:6px 0 18px">Regarding: ${about}</p>
+  <div class="field"><label>To</label><b>Lab Manager</b></div>
+  <div class="field"><textarea id="m-text" placeholder="Write a message..."></textarea></div>
+  <button class="bigpill" id="m-send" style="margin-top:6px">Send</button>`;
+ $('#m-send').onclick=()=>{
+   const v=$('#m-text').value.trim();
+   if(!v)return toast('Write something first');
+   $('#m-text').value='';toast('Message sent to Lab Manager \u2713');navBack();};
+ go('s-msg');
+}
+
+/* ================= instructions ================= */
+function openInstr(it){
+ $('#s-instr').innerHTML=`
+  <button class="back" onclick="navBack()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m14 6-6 6 6 6"/></svg>Back</button>
+  <h1 class="serif" style="font-size:30px;line-height:1.15">${it.name}</h1>
+  <p class="d-sub" style="margin:6px 0 16px">Usage instructions</p>
+  <div class="card"><h4>About</h4><p>${it.desc}</p></div>
+  <div class="card"><h4>How to use</h4><ol>${it.steps.map(s=>`<li>${s}</li>`).join('')}</ol></div>
+  <div class="note"><b>Safety \u00B7</b> ${it.safety}</div>`;
+ go('s-instr');
+}
+
+/* ================= profile ================= */
+function renderProfile(){
+ const u=state.user;if(!u)return;
+ $('#s-profile').innerHTML=`
+  <button class="back" onclick="navBack()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m14 6-6 6 6 6"/></svg>Back</button>
+  <div class="phead">
+    <div class="avatar">${u.initials}</div>
+    <div><h2 class="serif">${u.name}</h2><small>${u.role} \u00B7 ${u.lab}</small></div>
+  </div>
+  <div class="info" style="margin-bottom:16px">
+    <div class="row"><span>Email</span><b>${u.email}</b></div>
+    <div class="row"><span>Member since</span><b>Sep 2024</b></div>
+    <div class="row"><span>Open appointments</span><b>${state.appts.filter(a=>a.status==='Upcoming').length}</b></div>
+  </div>
+  <div class="menu">
+    <button class="mrow" id="p-msgs"><span class="mi y">${IC.msg}</span>My Messages
+      ${state.unread?`<span class="dot">${state.unread}</span>`:''}${state.unread?'':`<span class="chev">${IC.chev}</span>`}</button>
+    <button class="mrow" id="p-appts"><span class="mi m">${IC.cal}</span>My Appointments<span class="chev">${IC.chev}</span></button>
+    <button class="mrow" id="p-hist"><span class="mi b">${IC.clk}</span>Usage History<span class="chev">${IC.chev}</span></button>
+  </div>
+  <div class="menu">
+    <button class="mrow" id="p-pw"><span class="mi p">${IC.lock}</span>Change Password<span class="chev">${IC.chev}</span></button>
+    <button class="mrow" id="p-sw"><span class="mi t">${IC.swap}</span>Switch Account<span class="chev">${IC.chev}</span></button>
+    <button class="mrow" id="p-out"><span class="mi p">${IC.out}</span>Log Out</button>
+  </div>
+  <p style="text-align:center;color:var(--faint);font-size:11px;margin-top:6px">LabSlot \u00B7 v0.1 concept</p>`;
+ $('#p-msgs').onclick=()=>openInbox();
+ $('#p-appts').onclick=()=>openAppts();
+ $('#p-hist').onclick=()=>openHistory();
+ $('#p-pw').onclick=changePw;
+ $('#p-sw').onclick=()=>openSwitch();
+ $('#p-out').onclick=()=>{state.user=null;state.stack=[];show('s-login');toast('Logged out')};
+}
+
+/* ================= inbox / appointments / history ================= */
+function openInbox(){
+ $('#s-inbox').innerHTML=`
+  <button class="back" onclick="navBack()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m14 6-6 6 6 6"/></svg>Back</button>
+  <h1 class="serif" style="font-size:32px;margin-bottom:16px">Messages</h1>
+  ${state.msgs.length?state.msgs.map((m,i)=>`
+    <div class="msg ${m.read?'':'unread'}" data-i="${i}">
+      <div class="avatar sm" style="background:${m.col}">${m.ini}</div>
+      <div style="flex:1"><b>${m.from}</b><p>${m.text}</p></div><time>${m.time}</time>
+    </div>`).join(''):`<div class="empty">No messages yet.</div>`}`;
+ document.querySelectorAll('#s-inbox .msg').forEach(el=>el.onclick=()=>{
+   const m=state.msgs[+el.dataset.i];
+   if(!m.read){m.read=true;if(state.unread>0)state.unread--}
+   openInbox();});
+ go('s-inbox');
+}
+function openAppts(){
+ $('#s-appts').innerHTML=`
+  <button class="back" onclick="navBack()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m14 6-6 6 6 6"/></svg>Back</button>
+  <h1 class="serif" style="font-size:32px;margin-bottom:16px">My Appointments</h1>
+  ${state.appts.length?state.appts.map(a=>`
+    <div class="item" style="cursor:default">
+      <div><b style="font-family:'Playfair Display',serif;font-style:italic;font-size:17px">${a.item}</b>
+        <small>${a.date} \u00B7 ${a.time}</small></div>
+      <span class="badge ${a.status==='Upcoming'?'b-up':'b-done'}">${a.status}</span>
+    </div>`).join(''):`<div class="empty">No appointments yet.<br>Reserve an instrument to see it here.</div>`}`;
+ go('s-appts');
+}
+function openHistory(){
+ $('#s-history').innerHTML=`
+  <button class="back" onclick="navBack()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m14 6-6 6 6 6"/></svg>Back</button>
+  <h1 class="serif" style="font-size:32px;margin-bottom:14px">Usage History</h1>
+  <div class="card">
+  ${state.hist.length?state.hist.map(h=>{
+    const col={y:'var(--accent)',b:'var(--blue)',p:'var(--pink)',m:'var(--mint-deep)'}[h.k]||'var(--mint-deep)';
+    return `<div class="hrow"><div class="hicon" style="background:${col}">${h.item[0]}</div>
+      <div><b>${h.item}</b><small>${h.act}</small></div><time>${h.time}</time></div>`}).join('')
+   :`<div class="empty">Nothing yet \u2014 go use something!</div>`}
+  </div>`;
+ go('s-history');
+}
+
+/* ================= switch account ================= */
+function openSwitch(){
+ $('#s-switch').innerHTML=`
+  <button class="back" onclick="navBack()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m14 6-6 6 6 6"/></svg>Back</button>
+  <h1 class="serif" style="font-size:32px;margin-bottom:16px">Switch Account</h1>
+  ${ACCOUNTS.map((a,i)=>`
+    <div class="rec" data-i="${i}" style="margin-bottom:10px">
+      <div class="avatar sm">${a.initials}</div>
+      <div style="flex:1"><b>${a.name}</b><small>${a.role} \u00B7 ${a.lab}</small></div>
+      ${state.user&&state.user.name===a.name?`<span style="color:var(--green);font-weight:700">\u2713</span>`:''}
+    </div>`).join('')}`;
+ document.querySelectorAll('#s-switch .rec').forEach(el=>el.onclick=()=>{
+   switchTo(ACCOUNTS[+el.dataset.i])});
+ go('s-switch');
+}
+function switchTo(a){
+ state.user=a;state.stack=[];setTabHome();toast(`Switched to ${a.name}`);
+}
+function setTabHome(){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+ $('#tab-home').classList.add('active');show('s-home')}
+
+/* ================= login ================= */
+function renderSaved(){
+ $('#saved-accts').innerHTML=ACCOUNTS.map((a,i)=>`<button class="chip" data-i="${i}">${a.name.split(' ')[0]}</button>`).join('');
+ document.querySelectorAll('#saved-accts .chip').forEach(c=>c.onclick=()=>switchTo(ACCOUNTS[+c.dataset.i]));
+}
+function doLogin(){
+ const un=$('#l-user').value.trim(),pw=$('#l-pass').value;
+ if(!un||!pw)return toast('Please fill in both fields');
+ let a=ACCOUNTS.find(x=>x.name.toLowerCase().includes(un.split('.')[0].toLowerCase())||x.email.startsWith(un));
+ if(!a)a={name:un.replace(/[._]/g,' ').replace(/\b\w/g,c=>c.toUpperCase()),role:'Lab Member',
+   lab:'Molecular Biology Lab \u00B7 5F',email:un.includes('@')?un:un+'@uni.edu',
+   initials:un.slice(0,2).toUpperCase()};
+ $('#l-pass').value='';
+ state.user=a;state.stack=[];setTabHome();toast(`Welcome back, ${a.name.split(' ')[0]} !`);
+}
+$('#btn-login').onclick=doLogin;
+$('#l-pass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin()});
+
+/* ================= scan ================= */
+$('#btn-scan').onclick=()=>{$('#scanlay').classList.add('on')};
+function closeScan(){$('#scanlay').classList.remove('on')}
+const SCAN_TARGETS=[
+ {t:'Flow Cytometer',fn:()=>{closeScan();openEquip('cyto')}},
+ {t:'PBS (10\u00D7)',fn:()=>{closeScan();openReag('pbs')}},
+];
+$('#scan-chips').innerHTML=SCAN_TARGETS.map((c,i)=>`<button class="chip" data-i="${i}">${c.t}</button>`).join('');
+document.querySelectorAll('#scan-chips .chip').forEach(el=>{
+ el.onclick=()=>{SCAN_TARGETS[+el.dataset.i].fn();toast('QR matched \u2713')}});
+
+/* ================= modal / change password ================= */
+function openModal(html){$('#sheet').innerHTML=html;$('#modal').classList.add('on')}
+function closeModal(){$('#modal').classList.remove('on')}
+$('#modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal()});
+function changePw(){
+ openModal(`<h3>Change Password</h3>
+  <div class="field"><label>Current password</label><input type="password" id="pw-c"></div>
+  <div class="field"><label>New password</label><input type="password" id="pw-n"></div>
+  <div class="field"><label>Repeat new password</label><input type="password" id="pw-n2"></div>
+  <button class="bigpill" id="pw-save" style="margin-top:4px">Save</button>`);
+ $('#pw-save').onclick=()=>{
+   const c=$('#pw-c').value,n=$('#pw-n').value,n2=$('#pw-n2').value;
+   if(!c||!n)return toast('Fill in all fields');
+   if(n!==n2)return toast('New passwords do not match');
+   closeModal();toast('Password updated \u2713');};
+}
+
+/* ================= boot ================= */
+$('#tab-home').onclick=()=>setTab('s-home',$('#tab-home'));
+$('#tab-profile').onclick=()=>{if(!state.user)return show('s-login');
+  state.stack=[];document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  $('#tab-profile').classList.add('active');show('s-profile')};
+renderSaved();
+show('s-login');
+</script>
+</body>
+</html>
