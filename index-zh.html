@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>LabSlot — UI Concept</title>
+<title>LabSlot</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600;1,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -261,12 +261,12 @@
         </svg>
       </div>
       <h1 class="serif" style="font-size:44px">LabSlot</h1>
-      <p style="color:var(--muted);font-size:13.5px;margin:6px 0 30px">Lab equipment &amp; reagents, one tap away.</p>
+      <p style="color:var(--muted);font-size:13.5px;margin:6px 0 30px" data-i18n="l_sub">Lab equipment &amp; reagents, one tap away.</p>
     </div>
-    <div class="field"><label>Username</label><input id="l-user" placeholder="e.g. stina.levin" autocomplete="off"></div>
-    <div class="field"><label>Password</label><input id="l-pass" type="password" placeholder="••••••••"></div>
-    <button class="bigpill" style="margin-top:22px" id="btn-login">Sign In</button>
-    <p style="text-align:center;color:var(--faint);font-size:12px;margin:24px 0 12px;letter-spacing:.4px">— or continue with —</p>
+    <div class="field"><label data-i18n="l_user">Username</label><input id="l-user" data-i18n-ph="l_user_ph" placeholder="e.g. stina.levin" autocomplete="off"></div>
+    <div class="field"><label data-i18n="l_pass">Password</label><input id="l-pass" type="password" placeholder="••••••••"></div>
+    <button class="bigpill" style="margin-top:22px" id="btn-login" data-i18n="l_signin">Sign In</button>
+    <p style="text-align:center;color:var(--faint);font-size:12px;margin:24px 0 12px;letter-spacing:.4px" data-i18n="l_or">— or continue with —</p>
     <div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap" id="saved-accts"></div>
   </section>
 
@@ -310,8 +310,8 @@
   <nav class="tabbar hidden" id="tabbar">
     <button class="tab active" id="tab-home">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-4.5v-6h-5v6H5a1 1 0 0 1-1-1Z"/></svg>
-      Home<span data-i18n="home" hidden></span></button>
-    <button class="scanbtn" id="btn-scan" aria-label="Scan">
+      <span data-i18n="home">Home</span></button>
+    <button class="scanbtn" id="btn-scan" aria-label="\u626B\u7801">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4d4413" stroke-width="2.1" stroke-linecap="round"><path d="M4 8V5.5A1.5 1.5 0 0 1 5.5 4H8M16 4h2.5A1.5 1.5 0 0 1 20 5.5V8M20 16v2.5a1.5 1.5 0 0 1-1.5 1.5H16M8 20H5.5A1.5 1.5 0 0 1 4 18.5V16"/><path d="M12 8.5v7M8.5 12h7"/></svg>
     </button>
     <button class="tab" id="tab-profile">
@@ -345,85 +345,85 @@ const EQUIP=[
   desc:'High-performance liquid chromatograph with quaternary pump and diode-array detector for separation and quantification of compounds.',
   steps:['Prime the pump with your mobile phase and purge air bubbles.','Create a sequence and load the gradient method.','Inject the sample and monitor the chromatogram.','Flush the system with methanol/water after the run.'],
   safety:'Handle organic solvents in a fume hood and collect liquid waste properly.',
-  zh:{n:'\u9AD8\u6548\u6DB2\u76F8\u8272\u8C31\u4EEA',b:'\u5B89\u6377\u4F26',d:'\u914D\u6709\u56DB\u5143\u6CF5\u548C\u4E8C\u6781\u7BA1\u9635\u5217\u68C0\u6D4B\u5668\u7684\u9AD8\u6548\u6DB2\u76F8\u8272\u8C31\u4EEA\uFF0C\u7528\u4E8E\u5316\u5408\u7269\u7684\u5206\u79BB\u4E0E\u5B9A\u91CF\u5206\u6790\u3002',st:['\u7528\u6D41\u52A8\u76F8\u51B2\u6D17\u6CF5\u5E76\u6392\u9664\u6C14\u6CE1\u3002','\u521B\u5EFA\u5E8F\u5217\u5E76\u8F7D\u5165\u68AF\u5EA6\u65B9\u6CD5\u3002','\u8FDB\u6837\u5E76\u5728\u8272\u8C31\u56FE\u4E0A\u76D1\u6D4B\u3002','\u8FD0\u884C\u7ED3\u675F\u540E\u7528\u7532\u9187/\u6C34\u51B2\u6D17\u7CFB\u7EDF\u3002'],sf:'\u6709\u673A\u6EB6\u5242\u64CD\u4F5C\u8BF7\u5728\u901A\u98CE\u6A71\u5185\u8FDB\u884C\uFF0C\u5E9F\u6DB2\u6309\u89C4\u5B9A\u56DE\u6536\u3002'}},
+  zh:{n:'\u9AD8\u6548\u6DB2\u76F8\u8272\u8C31\u4EEA',b:'\u5B89\u6377\u4F26',loc:'3\u697C H01\u5B9E\u9A8C\u5BA4',d:'\u914D\u6709\u56DB\u5143\u6CF5\u548C\u4E8C\u6781\u7BA1\u9635\u5217\u68C0\u6D4B\u5668\u7684\u9AD8\u6548\u6DB2\u76F8\u8272\u8C31\u4EEA\uFF0C\u7528\u4E8E\u5316\u5408\u7269\u7684\u5206\u79BB\u4E0E\u5B9A\u91CF\u5206\u6790\u3002',st:['\u7528\u6D41\u52A8\u76F8\u51B2\u6D17\u6CF5\u5E76\u6392\u9664\u6C14\u6CE1\u3002','\u521B\u5EFA\u5E8F\u5217\u5E76\u8F7D\u5165\u68AF\u5EA6\u65B9\u6CD5\u3002','\u8FDB\u6837\u5E76\u5728\u8272\u8C31\u56FE\u4E0A\u76D1\u6D4B\u3002','\u8FD0\u884C\u7ED3\u675F\u540E\u7528\u7532\u9187/\u6C34\u51B2\u6D17\u7CFB\u7EDF\u3002'],sf:'\u6709\u673A\u6EB6\u5242\u64CD\u4F5C\u8BF7\u5728\u901A\u98CE\u6A71\u5185\u8FDB\u884C\uFF0C\u5E9F\u6DB2\u6309\u89C4\u5B9A\u56DE\u6536\u3002'}},
  {id:'icpms',name:'ICP-MS',brand:'Thermo Fisher',model:'iCAP RQ',loc:'3F Lab H02',coord:'3F-H02-1',
   status:'Available',holder:null,art:'tower',
   desc:'Inductively coupled plasma mass spectrometer for ultra-trace multi-element analysis of water, food and biological samples.',
   steps:['Ignite the plasma and let it stabilize for 30 min.','Run the tuning solution and check sensitivity.','Prepare samples in 2% nitric acid.','Run calibration standards before your samples.'],
   safety:'Hot plasma and argon lines \u2014 certified users only.',
-  zh:{n:'\u7535\u611F\u8026\u5408\u7B49\u79BB\u5B50\u4F53\u8D28\u8C31\u4EEA',b:'\u8D5B\u9ED8\u98DE',d:'\u7535\u611F\u8026\u5408\u7B49\u79BB\u5B50\u4F53\u8D28\u8C31\u4EEA\uFF0C\u7528\u4E8E\u6C34\u3001\u98DF\u54C1\u548C\u751F\u7269\u6837\u54C1\u7684\u8D85\u75D5\u91CF\u591A\u5143\u7D20\u5206\u6790\u3002',st:['\u70B9\u71C3\u7B49\u79BB\u5B50\u4F53\u5E76\u7A33\u5B9A 30 \u5206\u949F\u3002','\u8FD0\u884C\u8C03\u8C10\u6DB2\u5E76\u68C0\u67E5\u7075\u654F\u5EA6\u3002','\u6837\u54C1\u7528 2% \u785D\u9178\u914D\u5236\u3002','\u5148\u8DD1\u6807\u66F2\uFF0C\u518D\u6D4B\u6837\u54C1\u3002'],sf:'\u7B49\u79BB\u5B50\u4F53\u9AD8\u6E29\u4E14\u4F7F\u7528\u6C29\u6C14\u2014\u2014\u4EC5\u9650\u6388\u6743\u7528\u6237\u64CD\u4F5C\u3002'}},
+  zh:{n:'\u7535\u611F\u8026\u5408\u7B49\u79BB\u5B50\u8D28\u8C31\u4EEA',b:'\u8D5B\u9ED8\u98DE',loc:'3\u697C H02\u5B9E\u9A8C\u5BA4',d:'\u7535\u611F\u8026\u5408\u7B49\u79BB\u5B50\u4F53\u8D28\u8C31\u4EEA\uFF0C\u7528\u4E8E\u6C34\u3001\u98DF\u54C1\u548C\u751F\u7269\u6837\u54C1\u7684\u8D85\u75D5\u91CF\u591A\u5143\u7D20\u5206\u6790\u3002',st:['\u70B9\u71C3\u7B49\u79BB\u5B50\u4F53\u5E76\u7A33\u5B9A 30 \u5206\u949F\u3002','\u8FD0\u884C\u8C03\u8C10\u6DB2\u5E76\u68C0\u67E5\u7075\u654F\u5EA6\u3002','\u6837\u54C1\u7528 2% \u785D\u9178\u914D\u5236\u3002','\u5148\u8DD1\u6807\u66F2\uFF0C\u518D\u6D4B\u6837\u54C1\u3002'],sf:'\u7B49\u79BB\u5B50\u4F53\u9AD8\u6E29\u4E14\u4F7F\u7528\u6C29\u6C14\u2014\u2014\u4EC5\u9650\u6388\u6743\u7528\u6237\u64CD\u4F5C\u3002'}},
  {id:'gc',name:'Gas Chromatograph',brand:'Shimadzu',model:'GC-2010 Plus',loc:'3F Lab H02',coord:'3F-H02-2',
   status:'Available',holder:null,art:'tower',
   desc:'Gas chromatograph with FID detector for analysis of volatile organic compounds and solvents.',
   steps:['Turn on the gases and check the pressure readings.','Install the column and set the oven program.','Inject the sample via autosampler or manually.','Cool the oven and log the run in the book.'],
   safety:'Leak-check hydrogen and carrier gas lines before ignition.',
-  zh:{n:'\u6C14\u76F8\u8272\u8C31\u4EEA',b:'\u5C9B\u6D25',d:'\u914D\u5907 FID \u68C0\u6D4B\u5668\u7684\u6C14\u76F8\u8272\u8C31\u4EEA\uFF0C\u7528\u4E8E\u6325\u53D1\u6027\u6709\u673A\u7269\u548C\u6EB6\u5242\u7684\u5206\u6790\u3002',st:['\u5F00\u542F\u6C14\u4F53\u5E76\u68C0\u67E5\u538B\u529B\u8BFB\u6570\u3002','\u5B89\u88C5\u8272\u8C31\u67F1\u5E76\u8BBE\u7F6E\u7089\u6E29\u7A0B\u5E8F\u3002','\u901A\u8FC7\u81EA\u52A8\u8FDB\u6837\u5668\u6216\u624B\u52A8\u8FDB\u6837\u3002','\u7089\u6E29\u51B7\u5374\u540E\u5728\u8BB0\u5F55\u672C\u4E0A\u767B\u8BB0\u3002'],sf:'\u70B9\u706B\u524D\u8BF7\u5BF9\u6C22\u6C14\u548C\u8F7D\u6C14\u7BA1\u8DEF\u8FDB\u884C\u68C0\u6F0F\u3002'}},
+  zh:{n:'\u6C14\u76F8\u8272\u8C31\u4EEA',b:'\u5C9B\u6D25',loc:'3\u697C H02\u5B9E\u9A8C\u5BA4',d:'\u914D\u5907 FID \u68C0\u6D4B\u5668\u7684\u6C14\u76F8\u8272\u8C31\u4EEA\uFF0C\u7528\u4E8E\u6325\u53D1\u6027\u6709\u673A\u7269\u548C\u6EB6\u5242\u7684\u5206\u6790\u3002',st:['\u5F00\u542F\u6C14\u4F53\u5E76\u68C0\u67E5\u538B\u529B\u8BFB\u6570\u3002','\u5B89\u88C5\u8272\u8C31\u67F1\u5E76\u8BBE\u7F6E\u7089\u6E29\u7A0B\u5E8F\u3002','\u901A\u8FC7\u81EA\u52A8\u8FDB\u6837\u5668\u6216\u624B\u52A8\u8FDB\u6837\u3002','\u7089\u6E29\u51B7\u5374\u540E\u5728\u8BB0\u5F55\u672C\u4E0A\u767B\u8BB0\u3002'],sf:'\u70B9\u706B\u524D\u8BF7\u5BF9\u6C22\u6C14\u548C\u8F7D\u6C14\u7BA1\u8DEF\u8FDB\u884C\u68C0\u6F0F\u3002'}},
  {id:'gcms',name:'GC-MS',brand:'Thermo Fisher',model:'Trace 1300-ISQ LT',loc:'3F Lab H02',coord:'3F-H02-3',
   status:'Available',holder:null,art:'tower',
   desc:'Gas chromatograph coupled to a single-quadrupole mass spectrometer for identification of volatile compounds.',
   steps:['Confirm the vacuum is stable before starting.','Set the GC program and MS scan range.','Run a solvent blank before your samples.','Identify peaks with the library search.'],
   safety:'Never vent the MS without following the shutdown procedure.',
-  zh:{n:'\u6C14\u76F8\u8272\u8C31-\u8D28\u8C31\u8054\u7528\u4EEA',b:'\u8D5B\u9ED8\u98DE',d:'\u6C14\u76F8\u8272\u8C31\u4E0E\u5355\u56DB\u6781\u6746\u8D28\u8C31\u8054\u7528\uFF0C\u7528\u4E8E\u6325\u53D1\u6027\u5316\u5408\u7269\u7684\u5B9A\u6027\u9274\u5B9A\u3002',st:['\u786E\u8BA4\u771F\u7A7A\u7A33\u5B9A\u540E\u518D\u5F00\u59CB\u3002','\u8BBE\u7F6E GC \u7A0B\u5E8F\u548C MS \u626B\u63CF\u8303\u56F4\u3002','\u6837\u54C1\u524D\u5148\u8DD1\u4E00\u4E2A\u6EB6\u5242\u7A7A\u767D\u3002','\u901A\u8FC7\u8C31\u5E93\u68C0\u7D22\u9274\u5B9A\u8272\u8C31\u5CF0\u3002'],sf:'\u4E25\u7981\u4E0D\u6309\u653E\u7A7A\u6D41\u7A0B\u64CD\u4F5C\u8D28\u8C31\u3002'}},
+  zh:{n:'\u6C14\u76F8\u8272\u8C31-\u8D28\u8C31\u8FDE\u7528\u4EEA',b:'\u8D5B\u9ED8\u98DE',loc:'3\u697C H02\u5B9E\u9A8C\u5BA4',d:'\u6C14\u76F8\u8272\u8C31\u4E0E\u5355\u56DB\u6781\u6746\u8D28\u8C31\u8054\u7528\uFF0C\u7528\u4E8E\u6325\u53D1\u6027\u5316\u5408\u7269\u7684\u5B9A\u6027\u9274\u5B9A\u3002',st:['\u786E\u8BA4\u771F\u7A7A\u7A33\u5B9A\u540E\u518D\u5F00\u59CB\u3002','\u8BBE\u7F6E GC \u7A0B\u5E8F\u548C MS \u626B\u63CF\u8303\u56F4\u3002','\u6837\u54C1\u524D\u5148\u8DD1\u4E00\u4E2A\u6EB6\u5242\u7A7A\u767D\u3002','\u901A\u8FC7\u8C31\u5E93\u68C0\u7D22\u9274\u5B9A\u8272\u8C31\u5CF0\u3002'],sf:'\u4E25\u7981\u4E0D\u6309\u653E\u7A7A\u6D41\u7A0B\u64CD\u4F5C\u8D28\u8C31\u3002'}},
  {id:'gel',name:'Gel Imaging System',brand:'Bio-Rad',model:'Gel Doc XR+',loc:'4F Lab M01',coord:'4F-M01-1',
   status:'Available',holder:null,art:'screen',
   desc:'Gel documentation system with UV and white-light transilluminators for imaging agarose and polyacrylamide gels.',
   steps:['Place the gel on the transilluminator stage.','Select UV or white-light mode.','Focus, set exposure and capture the image.','Export the image and wipe the stage clean.'],
   safety:'Wear a UV face shield whenever the UV lamp is on.',
-  zh:{n:'\u51DD\u80F6\u6210\u50CF\u7CFB\u7EDF',b:'\u4F2F\u4E50',d:'\u914D\u7D2B\u5916\u548C\u767D\u5149\u900F\u5C04\u53F0\u7684\u51DD\u80F6\u6210\u50CF\u7CFB\u7EDF\uFF0C\u7528\u4E8E\u743C\u8102\u7CD6\u548C\u805A\u4E19\u70EF\u9170\u80FA\u51DD\u80F6\u6210\u50CF\u3002',st:['\u5C06\u51DD\u80F6\u653E\u5728\u900F\u5C04\u53F0\u4E0A\u3002','\u9009\u62E9\u7D2B\u5916\u6216\u767D\u5149\u6A21\u5F0F\u3002','\u5BF9\u7126\u3001\u8BBE\u7F6E\u66DD\u5149\u5E76\u91C7\u96C6\u56FE\u50CF\u3002','\u5BFC\u51FA\u56FE\u50CF\u5E76\u64E6\u51C0\u8F7D\u53F0\u3002'],sf:'\u7D2B\u5916\u706F\u5F00\u542F\u65F6\u8BF7\u4F69\u6234 UV \u9632\u62A4\u9762\u7F69\u3002'}},
+  zh:{n:'\u51DD\u80F6\u6210\u50CF\u7CFB\u7EDF',b:'\u4F2F\u4E50',loc:'4\u697C M01\u5B9E\u9A8C\u5BA4',d:'\u914D\u7D2B\u5916\u548C\u767D\u5149\u900F\u5C04\u53F0\u7684\u51DD\u80F6\u6210\u50CF\u7CFB\u7EDF\uFF0C\u7528\u4E8E\u743C\u8102\u7CD6\u548C\u805A\u4E19\u70EF\u9170\u80FA\u51DD\u80F6\u6210\u50CF\u3002',st:['\u5C06\u51DD\u80F6\u653E\u5728\u900F\u5C04\u53F0\u4E0A\u3002','\u9009\u62E9\u7D2B\u5916\u6216\u767D\u5149\u6A21\u5F0F\u3002','\u5BF9\u7126\u3001\u8BBE\u7F6E\u66DD\u5149\u5E76\u91C7\u96C6\u56FE\u50CF\u3002','\u5BFC\u51FA\u56FE\u50CF\u5E76\u64E6\u51C0\u8F7D\u53F0\u3002'],sf:'\u7D2B\u5916\u706F\u5F00\u542F\u65F6\u8BF7\u4F69\u6234 UV \u9632\u62A4\u9762\u7F69\u3002'}},
  {id:'pcr',name:'PCR Amplifier',brand:'Thermo Fisher',model:'\u2014',loc:'4F Lab M02',coord:'4F-M02-1',
   status:'Available',holder:null,art:'pcr',
   desc:'Thermal cycler for endpoint PCR amplification of nucleic acids.',
   steps:['Program or select the temperature profile.','Load tubes with lids tightly closed.','Start the run and check the lid temperature.','Retrieve samples once the run completes.'],
   safety:'The heated lid reaches 105 \u00B0C \u2014 let it cool before unloading.',
-  zh:{n:'PCR\u6269\u589E\u4EEA',b:'\u8D5B\u9ED8\u98DE',d:'\u7528\u4E8E\u6838\u9178\u672B\u7AEF PCR \u6269\u589E\u7684\u70ED\u5FAA\u73AF\u4EEA\u3002',st:['\u7F16\u7A0B\u6216\u9009\u62E9\u6E29\u5EA6\u7A0B\u5E8F\u3002','\u88C5\u7BA1\u5E76\u786E\u4FDD\u7BA1\u76D6\u76D6\u7D27\u3002','\u542F\u52A8\u8FD0\u884C\u5E76\u786E\u8BA4\u70ED\u76D6\u6E29\u5EA6\u3002','\u8FD0\u884C\u7ED3\u675F\u540E\u53D6\u51FA\u6837\u54C1\u3002'],sf:'\u70ED\u76D6\u6E29\u5EA6\u53EF\u8FBE 105 \u2103\u2014\u2014\u5F85\u51B7\u5374\u540E\u518D\u5F00\u76D6\u53D6\u6837\u3002'}},
+  zh:{n:'PCR\u6269\u589E\u4EEA',b:'\u8D5B\u9ED8\u98DE',loc:'4\u697C M02\u5B9E\u9A8C\u5BA4',d:'\u7528\u4E8E\u6838\u9178\u672B\u7AEF PCR \u6269\u589E\u7684\u70ED\u5FAA\u73AF\u4EEA\u3002',st:['\u7F16\u7A0B\u6216\u9009\u62E9\u6E29\u5EA6\u7A0B\u5E8F\u3002','\u88C5\u7BA1\u5E76\u786E\u4FDD\u7BA1\u76D6\u76D6\u7D27\u3002','\u542F\u52A8\u8FD0\u884C\u5E76\u786E\u8BA4\u70ED\u76D6\u6E29\u5EA6\u3002','\u8FD0\u884C\u7ED3\u675F\u540E\u53D6\u51FA\u6837\u54C1\u3002'],sf:'\u70ED\u76D6\u6E29\u5EA6\u53EF\u8FBE 105 \u2103\u2014\u2014\u5F85\u51B7\u5374\u540E\u518D\u5F00\u76D6\u53D6\u6837\u3002'}},
  {id:'cyto',name:'Flow Cytometer',brand:'BD Biosciences',model:'Accuri C6 Plus',loc:'4F Lab M02',coord:'4F-M02-2',
   status:'Available',holder:null,art:'cyto',
   desc:'A benchtop flow cytometer for cell counting and biomarker detection. Ideal for routine immunophenotyping and GFP expression assays.',
   steps:['Turn on the power and wait for fluidics to prime (about 3 min).','Log in on the panel and create a new experiment file.','Load your sample tube and run QC beads first.','Acquire data, then run cleaning solution after use.'],
   safety:'Wear gloves and lab coat. Dispose of waste in the labelled container next to the unit.',
-  zh:{n:'\u6D41\u5F0F\u7EC6\u80DE\u4EEA',b:'\u78A7\u8FEA',d:'\u53F0\u5F0F\u6D41\u5F0F\u7EC6\u80DE\u4EEA\uFF0C\u7528\u4E8E\u7EC6\u80DE\u8BA1\u6570\u548C\u6807\u5FD7\u7269\u68C0\u6D4B\uFF0C\u9002\u5408\u5E38\u89C4\u514D\u75AB\u8868\u578B\u548C GFP \u8868\u8FBE\u5206\u6790\u3002',st:['\u5F00\u673A\u5E76\u7B49\u5F85\u6DB2\u6D41\u521D\u59CB\uFF08\u7EA6 3 \u5206\u949F\uFF09\u3002','\u5728\u9762\u677F\u767B\u5F55\u5E76\u65B0\u5EFA\u5B9E\u9A8C\u6587\u4EF6\u3002','\u4E0A\u6837\u524D\u5148\u8DD1 QC \u5FAE\u7403\u3002','\u91C7\u96C6\u6570\u636E\uFF0C\u7ED3\u675F\u540E\u8FD0\u884C\u6E05\u6D17\u6DB2\u3002'],sf:'\u8BF7\u7A7F\u6234\u624B\u5957\u548C\u5B9E\u9A8C\u670D\uFF0C\u5E9F\u6DB2\u5012\u5165\u6307\u5B9A\u5BB9\u5668\u3002'}},
+  zh:{n:'\u6D41\u5F0F\u7EC6\u80DE\u4EEA',b:'\u78A7\u8FEA',loc:'4\u697C M02\u5B9E\u9A8C\u5BA4',d:'\u53F0\u5F0F\u6D41\u5F0F\u7EC6\u80DE\u4EEA\uFF0C\u7528\u4E8E\u7EC6\u80DE\u8BA1\u6570\u548C\u6807\u5FD7\u7269\u68C0\u6D4B\uFF0C\u9002\u5408\u5E38\u89C4\u514D\u75AB\u8868\u578B\u548C GFP \u8868\u8FBE\u5206\u6790\u3002',st:['\u5F00\u673A\u5E76\u7B49\u5F85\u6DB2\u6D41\u521D\u59CB\uFF08\u7EA6 3 \u5206\u949F\uFF09\u3002','\u5728\u9762\u677F\u767B\u5F55\u5E76\u65B0\u5EFA\u5B9E\u9A8C\u6587\u4EF6\u3002','\u4E0A\u6837\u524D\u5148\u8DD1 QC \u5FAE\u7403\u3002','\u91C7\u96C6\u6570\u636E\uFF0C\u7ED3\u675F\u540E\u8FD0\u884C\u6E05\u6D17\u6DB2\u3002'],sf:'\u8BF7\u7A7F\u6234\u624B\u5957\u548C\u5B9E\u9A8C\u670D\uFF0C\u5E9F\u6DB2\u5012\u5165\u6307\u5B9A\u5BB9\u5668\u3002'}},
  {id:'spec',name:'Micro-Volume Spectrophotometer',brand:'Thermo Fisher',model:'\u2014',loc:'5F Lab A01',coord:'5F-A01-1',
   status:'Available',holder:null,art:'screen',
   desc:'Micro-volume UV-Vis spectrophotometer for quick nucleic-acid and protein quantification (A260/A280).',
   steps:['Wipe the pedestal and pipette 1\u20132 \u00B5L of sample.','Select the assay: DNA, RNA or protein.','Measure and note concentration and purity ratios.','Clean the pedestal with water after use.'],
   safety:'Do not scratch the optical pedestal.',
-  zh:{n:'\u8D85\u5FAE\u91CF\u5206\u5149\u5149\u5EA6\u8BA1',b:'\u8D5B\u9ED8\u98DE',d:'\u8D85\u5FAE\u91CF\u7D2B\u5916-\u53EF\u89C1\u5206\u5149\u5149\u5EA6\u8BA1\uFF0C\u7528\u4E8E\u6838\u9178\u548C\u86CB\u767D\u7684\u5FEB\u901F\u5B9A\u91CF\uFF08A260/A280\uFF09\u3002',st:['\u64E6\u51C0\u68C0\u6D4B\u53F0\uFF0C\u5438\u53D6 1\u20132 \u03BCL \u6837\u54C1\u3002','\u9009\u62E9\u68C0\u6D4B\u9879\uFF1ADNA\u3001RNA \u6216\u86CB\u767D\u3002','\u8BB0\u5F55\u6D53\u5EA6\u548C\u7EAF\u5EA6\u6BD4\u503C\u3002','\u4F7F\u7528\u540E\u7528\u6C34\u6E05\u6D01\u68C0\u6D4B\u53F0\u3002'],sf:'\u8BF7\u52FF\u5212\u4F24\u5149\u5B66\u68C0\u6D4B\u53F0\u3002'}},
+  zh:{n:'\u8D85\u5FAE\u91CF\u5206\u5149\u5149\u5EA6\u8BA1',b:'\u8D5B\u9ED8\u98DE',loc:'5\u697C A01\u5B9E\u9A8C\u5BA4',d:'\u8D85\u5FAE\u91CF\u7D2B\u5916-\u53EF\u89C1\u5206\u5149\u5149\u5EA6\u8BA1\uFF0C\u7528\u4E8E\u6838\u9178\u548C\u86CB\u767D\u7684\u5FEB\u901F\u5B9A\u91CF\uFF08A260/A280\uFF09\u3002',st:['\u64E6\u51C0\u68C0\u6D4B\u53F0\uFF0C\u5438\u53D6 1\u20132 \u03BCL \u6837\u54C1\u3002','\u9009\u62E9\u68C0\u6D4B\u9879\uFF1ADNA\u3001RNA \u6216\u86CB\u767D\u3002','\u8BB0\u5F55\u6D53\u5EA6\u548C\u7EAF\u5EA6\u6BD4\u503C\u3002','\u4F7F\u7528\u540E\u7528\u6C34\u6E05\u6D01\u68C0\u6D4B\u53F0\u3002'],sf:'\u8BF7\u52FF\u5212\u4F24\u5149\u5B66\u68C0\u6D4B\u53F0\u3002'}},
  {id:'visia',name:'Facial Skin Imaging Analyzer',brand:'Canfield',model:'VISIA-CR',loc:'2F Skin Lab S01',coord:'2F-S01-1',
   status:'Available',holder:null,art:'screen',
   desc:'Standardized facial imaging system capturing visible, UV and cross-polarized photos for skin analysis.',
   steps:['Register the subject and set the chin rest.','Align the face with the mirrored guides.','Capture the image series in each mode.','Review and export the analysis report.'],
   safety:'Disinfect the headrest after every subject.',
-  zh:{n:'\u9762\u90E8\u76AE\u80A4\u56FE\u50CF\u5206\u6790\u4EEA',b:'Canfield',d:'\u6807\u51C6\u5316\u9762\u90E8\u6210\u50CF\u7CFB\u7EDF\uFF0C\u91C7\u96C6\u53EF\u89C1\u5149\u3001\u7D2B\u5916\u548C\u4EA4\u53C9\u504F\u632F\u7167\u7247\u8FDB\u884C\u76AE\u80A4\u5206\u6790\u3002',st:['\u767B\u8BB0\u53D7\u8BD5\u8005\u5E76\u8C03\u6574\u4E0B\u988C\u6258\u3002','\u5BF9\u7167\u955C\u9762\u53C2\u8003\u7EBF\u5BF9\u9F50\u9762\u90E8\u3002','\u4F9D\u6B21\u5728\u5404\u6A21\u5F0F\u4E0B\u91C7\u96C6\u56FE\u50CF\u3002','\u67E5\u770B\u5E76\u5BFC\u51FA\u5206\u6790\u62A5\u544A\u3002'],sf:'\u6BCF\u4F4D\u53D7\u8BD5\u8005\u4F7F\u7528\u540E\u8BF7\u5BF9\u5934\u6258\u6D88\u6BD2\u3002'}},
+  zh:{n:'\u9762\u90E8\u76AE\u80A4\u56FE\u50CF\u5206\u6790\u4EEA',b:'Canfield',loc:'2\u697C S01\u76AE\u80A4\u5B9E\u9A8C\u5BA4',d:'\u6807\u51C6\u5316\u9762\u90E8\u6210\u50CF\u7CFB\u7EDF\uFF0C\u91C7\u96C6\u53EF\u89C1\u5149\u3001\u7D2B\u5916\u548C\u4EA4\u53C9\u504F\u632F\u7167\u7247\u8FDB\u884C\u76AE\u80A4\u5206\u6790\u3002',st:['\u767B\u8BB0\u53D7\u8BD5\u8005\u5E76\u8C03\u6574\u4E0B\u988C\u6258\u3002','\u5BF9\u7167\u955C\u9762\u53C2\u8003\u7EBF\u5BF9\u9F50\u9762\u90E8\u3002','\u4F9D\u6B21\u5728\u5404\u6A21\u5F0F\u4E0B\u91C7\u96C6\u56FE\u50CF\u3002','\u67E5\u770B\u5E76\u5BFC\u51FA\u5206\u6790\u62A5\u544A\u3002'],sf:'\u6BCF\u4F4D\u53D7\u8BD5\u8005\u4F7F\u7528\u540E\u8BF7\u5BF9\u5934\u6258\u6D88\u6BD2\u3002'}},
  {id:'skin',name:'Multi-Function Skin Tester',brand:'CK',model:'MPA580',loc:'2F Skin Lab S01',coord:'2F-S01-2',
   status:'Available',holder:null,art:'scope',
   desc:'Multi-probe system measuring sebum, moisture, pH, elasticity and other skin parameters.',
   steps:['Select a probe and calibrate if required.','Let the subject acclimatize 20 min at 21 \u00B0C.','Place the probe on the marked test site.','Record the reading for each probe.'],
   safety:'Disinfect probes between subjects.',
-  zh:{n:'\u591A\u529F\u80FD\u76AE\u80A4\u6D4B\u8BD5\u4EEA',b:'CK',d:'\u591A\u63A2\u5934\u7CFB\u7EDF\uFF0C\u6D4B\u91CF\u76AE\u8102\u3001\u6C34\u5206\u3001pH\u3001\u5F39\u6027\u7B49\u76AE\u80A4\u53C2\u6570\u3002',st:['\u9009\u62E9\u63A2\u5934\u5E76\u6309\u9700\u6821\u51C6\u3002','\u53D7\u8BD5\u8005\u5728 21 \u2103 \u73AF\u5883\u9002\u5E94 20 \u5206\u949F\u3002','\u5C06\u63A2\u5934\u653E\u5728\u6807\u8BB0\u7684\u6D4B\u8BD5\u90E8\u4F4D\u3002','\u8BB0\u5F55\u6BCF\u4E2A\u63A2\u5934\u7684\u8BFB\u6570\u3002'],sf:'\u63A2\u5934\u8BF7\u5728\u53D7\u8BD5\u8005\u4E4B\u95F4\u6D88\u6BD2\u3002'}},
+  zh:{n:'\u591A\u529F\u80FD\u76AE\u80A4\u6D4B\u8BD5\u4EEA',b:'CK',loc:'2\u697C S01\u76AE\u80A4\u5B9E\u9A8C\u5BA4',d:'\u591A\u63A2\u5934\u7CFB\u7EDF\uFF0C\u6D4B\u91CF\u76AE\u8102\u3001\u6C34\u5206\u3001pH\u3001\u5F39\u6027\u7B49\u76AE\u80A4\u53C2\u6570\u3002',st:['\u9009\u62E9\u63A2\u5934\u5E76\u6309\u9700\u6821\u51C6\u3002','\u53D7\u8BD5\u8005\u5728 21 \u2103 \u73AF\u5883\u9002\u5E94 20 \u5206\u949F\u3002','\u5C06\u63A2\u5934\u653E\u5728\u6807\u8BB0\u7684\u6D4B\u8BD5\u90E8\u4F4D\u3002','\u8BB0\u5F55\u6BCF\u4E2A\u63A2\u5934\u7684\u8BFB\u6570\u3002'],sf:'\u63A2\u5934\u8BF7\u5728\u53D7\u8BD5\u8005\u4E4B\u95F4\u6D88\u6BD2\u3002'}},
  {id:'dls',name:'Particle Size Analyzer',brand:'Brookhaven',model:'\u2014',loc:'3F Lab H03',coord:'3F-H03-1',
   status:'Available',holder:null,art:'spin',
   desc:'Dynamic light-scattering system for particle size distribution and stability of suspensions.',
   steps:['Filter the dispersant and dilute the sample.','Load the cuvette into the holder.','Run the measurement at 25 \u00B0C.','Check the polydispersity index before saving.'],
   safety:'Use clean, bubble-free cuvettes.',
-  zh:{n:'\u4F53\u7CFB\u7A33\u5B9A\u6027\u5149\u6563\u5C04\u5206\u6790\u7CFB\u7EDF\uFF08\u7C92\u5F84\u4EEA\uFF09',b:'\u535A\u514B\u6D77\u6587',d:'\u52A8\u6001\u5149\u6563\u5C04\u7CFB\u7EDF\uFF0C\u7528\u4E8E\u60AC\u6D6E\u6DB2\u7C92\u5F84\u5206\u5E03\u548C\u4F53\u7CFB\u7A33\u5B9A\u6027\u5206\u6790\u3002',st:['\u8FC7\u6EE4\u5206\u6563\u5242\u5E76\u7A00\u91CA\u6837\u54C1\u3002','\u5C06\u6BD4\u8272\u76BF\u653E\u5165\u6837\u54C1\u69FD\u3002','\u5728 25 \u2103 \u4E0B\u8FD0\u884C\u6D4B\u91CF\u3002','\u4FDD\u5B58\u524D\u68C0\u67E5\u591A\u5206\u6563\u6307\u6570\u3002'],sf:'\u4F7F\u7528\u6D01\u51C0\u3001\u65E0\u6C14\u6CE1\u7684\u6BD4\u8272\u76BF\u3002'}},
+  zh:{n:'\u4F53\u7CFB\u7A33\u5B9A\u6027\u5149\u5206\u6563\u5206\u6790\u7CFB\u7EDF\uFF08\u7C92\u5F84\u4EEA\uFF09',b:'\u535A\u514B\u6D77\u6587',loc:'3\u697C H03\u5B9E\u9A8C\u5BA4',d:'\u52A8\u6001\u5149\u6563\u5C04\u7CFB\u7EDF\uFF0C\u7528\u4E8E\u60AC\u6D6E\u6DB2\u7C92\u5F84\u5206\u5E03\u548C\u4F53\u7CFB\u7A33\u5B9A\u6027\u5206\u6790\u3002',st:['\u8FC7\u6EE4\u5206\u6563\u5242\u5E76\u7A00\u91CA\u6837\u54C1\u3002','\u5C06\u6BD4\u8272\u76BF\u653E\u5165\u6837\u54C1\u69FD\u3002','\u5728 25 \u2103 \u4E0B\u8FD0\u884C\u6D4B\u91CF\u3002','\u4FDD\u5B58\u524D\u68C0\u67E5\u591A\u5206\u6563\u6307\u6570\u3002'],sf:'\u4F7F\u7528\u6D01\u51C0\u3001\u65E0\u6C14\u6CE1\u7684\u6BD4\u8272\u76BF\u3002'}},
 ];
 const REAG=[
  {id:'pbs',name:'PBS (10\u00D7)',brand:'Gibco',cap:500,vol:320,lab:'5F Lab',cab:'Cabinet C1',shelf:'Shelf 2',
   desc:'Phosphate-buffered saline, 10\u00D7 concentrate. Dilute to 1\u00D7 with sterile water before use.',
   steps:['Dilute 1 part concentrate with 9 parts sterile water.','Mix gently and store diluted stock at 4 \u00B0C.'],
-  zh:{n:'PBS \u7F13\u51B2\u6DB2\uFF0810\u00D7\uFF09',b:'Gibco',d:'\u78F7\u9178\u76D0\u7F13\u51B2\u6DB210\u00D7\u6D53\u7F29\u6DB2\uFF0C\u4F7F\u7528\u524D\u7528\u65E0\u83CC\u6C34\u7A00\u91CA\u81F3 1\u00D7\u3002',st:['\u6309 1 \u4EFD\u6D53\u7F29\u6DB2 + 9 \u4EFD\u65E0\u83CC\u6C34\u7A00\u91CA\u3002','\u8F7B\u67D4\u6DF7\u5408\uFF0C\u7A00\u91CA\u6DB2\u4E8E 4 \u2103 \u50A8\u5B58\u3002']}},
+  zh:{n:'PBS \u7F13\u51B2\u6DB2\uFF0810\u00D7\uFF09',b:'Gibco',lab:'5\u697C\u5B9E\u9A8C\u5BA4',cab:'C1\u8BD5\u5242\u67DC',shelf:'\u7B2C2\u5C42',d:'\u78F7\u9178\u76D0\u7F13\u51B2\u6DB210\u00D7\u6D53\u7F29\u6DB2\uFF0C\u4F7F\u7528\u524D\u7528\u65E0\u83CC\u6C34\u7A00\u91CA\u81F3 1\u00D7\u3002',st:['\u6309 1 \u4EFD\u6D53\u7F29\u6DB2 + 9 \u4EFD\u65E0\u83CC\u6C34\u7A00\u91CA\u3002','\u8F7B\u67D4\u6DF7\u5408\uFF0C\u7A00\u91CA\u6DB2\u4E8E 4 \u2103 \u50A8\u5B58\u3002']}},
  {id:'eth',name:'Ethanol 99.9%',brand:'Sigma-Aldrich',cap:1000,vol:150,lab:'4F Lab',cab:'Cabinet A2',shelf:'Shelf 1',
   desc:'Absolute ethanol for molecular biology, nuclease-free.',
   steps:['Dispense in a fume hood.','Keep the bottle tightly closed \u2014 hygroscopic.'],
-  zh:{n:'\u65E0\u6C34\u4E59\u9187\uFF0899.9%\uFF09',b:'Sigma-Aldrich',d:'\u5206\u5B50\u751F\u7269\u5B66\u7528\u65E0\u6C34\u4E59\u9187\uFF0C\u65E0\u6838\u9178\u6D3B\u6027\u3002',st:['\u8BF7\u5728\u901A\u98CE\u6A71\u5185\u5206\u88C5\u3002','\u74F6\u76D6\u62E7\u7D27\u2014\u2014\u4E59\u9187\u6613\u5438\u6F6A\u3002']}},
+  zh:{n:'\u65E0\u6C34\u4E59\u9187\uFF0899.9%\uFF09',b:'Sigma-Aldrich',lab:'4\u697C\u5B9E\u9A8C\u5BA4',cab:'A2\u8BD5\u5242\u67DC',shelf:'\u7B2C1\u5C42',d:'\u5206\u5B50\u751F\u7269\u5B66\u7528\u65E0\u6C34\u4E59\u9187\uFF0C\u65E0\u6838\u9178\u6D3B\u6027\u3002',st:['\u8BF7\u5728\u901A\u98CE\u6A71\u5185\u5206\u88C5\u3002','\u74F6\u76D6\u62E7\u7D27\u2014\u2014\u4E59\u9187\u6613\u5438\u6F6A\u3002']}},
  {id:'dmem',name:'DMEM High Glucose',brand:'Gibco',cap:500,vol:500,lab:'5F Lab',cab:'Cabinet C1',shelf:'Shelf 1',
   desc:'Dulbecco\u2019s Modified Eagle Medium, high glucose, with L-glutamine. Supplement with FBS before use.',
   steps:['Warm to 37 \u00B0C in a water bath before use.','Add 10% FBS and 1% penicillin-streptomycin.'],
-  zh:{n:'DMEM \u9AD8\u7CD6\u57F9\u517B\u57FA',b:'Gibco',d:'\u9AD8\u7CD6\u578B DMEM \u57F9\u517B\u57FA\uFF0C\u542B L-\u8C37\u6C28\u9170\u80FA\uFF0C\u4F7F\u7528\u524D\u9700\u8865\u5145 FBS\u3002',st:['\u4F7F\u7528\u524D\u5728 37 \u2103 \u6C34\u6D74\u4E2D\u590D\u6E29\u3002','\u6DFB\u52A0 10% FBS \u548C 1% \u9752-\u94FE\u6297\u751F\u7D20\u3002']}},
+  zh:{n:'DMEM \u9AD8\u7CD6\u57F9\u517B\u57FA',b:'Gibco',lab:'5\u697C\u5B9E\u9A8C\u5BA4',cab:'C1\u8BD5\u5242\u67DC',shelf:'\u7B2C1\u5C42',d:'\u9AD8\u7CD6\u578B DMEM \u57F9\u517B\u57FA\uFF0C\u542B L-\u8C37\u6C28\u9170\u80FA\uFF0C\u4F7F\u7528\u524D\u9700\u8865\u5145 FBS\u3002',st:['\u4F7F\u7528\u524D\u5728 37 \u2103 \u6C34\u6D74\u4E2D\u590D\u6E29\u3002','\u6DFB\u52A0 10% FBS \u548C 1% \u9752-\u94FE\u6297\u751F\u7D20\u3002']}},
  {id:'trizol',name:'TRIzol Reagent',brand:'Invitrogen',cap:100,vol:42,lab:'4F Lab',cab:'Cabinet B3',shelf:'Shelf 3',
   desc:'Single-step RNA isolation reagent for total RNA extraction from cells and tissue.',
   steps:['Use 1 mL per 10 cm\u00B2 of culture area.','Phase-separate with chloroform, then precipitate RNA with isopropanol.'],
-  zh:{n:'TRIzol \u8BD5\u5242',b:'Invitrogen',d:'\u4E00\u6B65\u6CD5 RNA \u5206\u79BB\u8BD5\u5242\uFF0C\u7528\u4E8E\u4ECE\u7EC6\u80DE\u548C\u7EC4\u7EC7\u4E2D\u63D0\u53D6\u603B RNA\u3002',st:['\u6BCF 10 cm\u00B2 \u57F9\u517B\u9762\u79EF\u4F7F\u7528 1 mL\u3002','\u52A0\u6C2F\u4EFF\u5206\u76F8\uFF0C\u518D\u7528\u5F02\u4E19\u9187\u6C89\u6DC0 RNA\u3002']}},
+  zh:{n:'TRIzol \u8BD5\u5242',b:'Invitrogen',lab:'4\u697C\u5B9E\u9A8C\u5BA4',cab:'B3\u8BD5\u5242\u67DC',shelf:'\u7B2C3\u5C42',d:'\u4E00\u6B65\u6CD5 RNA \u5206\u79BB\u8BD5\u5242\uFF0C\u7528\u4E8E\u4ECE\u7EC6\u80DE\u548C\u7EC4\u7EC7\u4E2D\u63D0\u53D6\u603B RNA\u3002',st:['\u6BCF 10 cm\u00B2 \u57F9\u517B\u9762\u79EF\u4F7F\u7528 1 mL\u3002','\u52A0\u6C2F\u4EFF\u5206\u76F8\uFF0C\u518D\u7528\u5F02\u4E19\u9187\u6C89\u6DC0 RNA\u3002']}},
 ];
 const ACCOUNTS=[
  {name:'Stina Levin',role:'PhD Student',rZh:'\u535A\u58EB\u7814\u7A76\u751F',lab:'Molecular Biology Lab \u00B7 5F',lZh:'\u5206\u5B50\u751F\u7269\u5B66\u5B9E\u9A8C\u5BA4 \u00B7 5F',email:'stina.levin@uni.edu',initials:'SL'},
@@ -454,7 +454,7 @@ const PHOTO={
 };
 
 /* ================= i18n ================= */
-let LANG='en';
+let LANG='zh';
 const t=k=>(T[k]&&T[k][LANG])||k;
 const T={
  back:{en:'Back',zh:'返回'},
@@ -480,6 +480,7 @@ const T={
  st_stock:{en:'In stock',zh:'库存充足'},
  st_low:{en:'Low',zh:'库存不足'},
  d_mfr:{en:'Manufacturer',zh:'厂商'},
+ d_email:{en:'Email',zh:'\u90AE\u7BB1'},
  d_model:{en:'Model',zh:'型号'},
  d_loc:{en:'Location',zh:'位置'},
  d_coord:{en:'Coordinates',zh:'坐标'},
@@ -578,11 +579,15 @@ const fmtDT=(day,hm)=>`${fmtDay(day)} \u00B7 ${hm}`;
 const fmtApptDate=d=>LANG==='zh'?`${d.getMonth()+1}\u6708${d.getDate()}\u65E5`:`${MON[d.getMonth()].slice(0,3)} ${d.getDate()}`;
 const fmtMonth=(d,y)=>LANG==='zh'?`${y}\u5E74${d+1}\u6708`:`${MON[d]} ${y}`;
 const fmtPct=v=>LANG==='zh'?`${v}%`:`${v}%`;
-function name(e){return LANG==='zh'?(e.nZh||e.name):e.name}
-function brand(e){return LANG==='zh'?(e.bZh||e.brand):e.brand}
-function desc(e){return LANG==='zh'?(e.dZh||e.desc):e.desc}
-function steps(e){return LANG==='zh'?(e.stZh||e.steps):e.steps}
-function safety(e){return LANG==='zh'?(e.sfZh||e.safety):e.safety}
+function name(e){return (e.zh&&e.zh.n)||e.nZh||e.name}
+function brand(e){return (e.zh&&e.zh.b)||e.bZh||e.brand}
+function desc(e){return (e.zh&&e.zh.d)||e.dZh||e.desc}
+function steps(e){return (e.zh&&e.zh.st)||e.stZh||e.steps}
+function safety(e){return (e.zh&&e.zh.sf)||e.sfZh||e.safety}
+function loc(e){return LANG==='zh'?((e.zh&&e.zh.loc)||e.loc):e.loc}
+function rlab(e){return LANG==='zh'?((e.zh&&e.zh.lab)||e.lab):e.lab}
+function rcab(e){return LANG==='zh'?((e.zh&&e.zh.cab)||e.cab):e.cab}
+function rshelf(e){return LANG==='zh'?((e.zh&&e.zh.shelf)||e.shelf):e.shelf}
 function badge(st){return `<span class="badge ${BCLASS[st]||'b-avl'}">${t(STKEY[st]||'st_avl')}</span>`}
 
 
@@ -657,14 +662,14 @@ const IC={
 function renderHome(){
  if(state.user)$('#h-name').textContent=state.user.name.split(' ')[0];
  const qe=$('#q-e').value.trim().toLowerCase();
- const listE=EQUIP.filter(e=>(e.name+(e.nZh||'')+e.brand+(e.bZh||'')+e.model).toLowerCase().includes(qe));
+ const listE=EQUIP.filter(e=>(e.name+e.brand+e.model+(e.zh?e.zh.n+e.zh.b:'')).toLowerCase().includes(qe));
  $('#list-e').innerHTML=listE.length?listE.map(e=>`
    <div class="item" data-e="${e.id}">${photo(e.id,'thumb',name(e))}
      <div><b>${name(e)}</b><small>${brand(e)} \u00B7 ${e.model}</small></div>${badge(e.status)}
    </div>`).join('')
   :`<div class="empty">${t('em_e').replace('%s',esc(qe))}</div>`;
  const qr=$('#q-r').value.trim().toLowerCase();
- const listR=REAG.filter(r=>(r.name+(r.nZh||'')+r.brand+(r.bZh||'')).toLowerCase().includes(qr));
+ const listR=REAG.filter(r=>(r.name+r.brand+(r.zh?r.zh.n+r.zh.b:'')).toLowerCase().includes(qr));
  $('#list-r').innerHTML=listR.length?listR.map(r=>{
    const pct=Math.round(r.vol/r.cap*100);
    return `<div class="item" data-r="${r.id}">${photo(r.id,'thumb',name(r))}
@@ -694,7 +699,7 @@ function openEquip(id){
   <div class="info">
     <div class="row"><span>${t('d_mfr')}</span><b>${brand(e)}</b></div>
     <div class="row"><span>${t('d_model')}</span><b>${e.model}</b></div>
-    <div class="row"><span>${t('d_loc')}</span><b>${e.loc}</b></div>
+    <div class="row"><span>${t('d_loc')}</span><b>${loc(e)}</b></div>
     <div class="row"><span>${t('d_coord')}</span><b>${e.coord}</b></div>
     <div class="row"><span>${t('d_status')}</span><b>${t(STKEY[e.status]||e.status)}${e.holder?` \u00B7 ${e.holder}`:''}</b></div>
   </div>
@@ -738,16 +743,16 @@ function openReag(id){
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m14 6-6 6 6 6"/></svg>${t('back')}</button>
   <div class="d-head">
     <div><h1 class="serif d-title">${name(r)}</h1><p class="d-sub">${brand(r)}</p></div>
-    <div class="d-meta"><div class="d-coord">${r.cab}</div><span class="badge ${pct>30?'b-avl':'b-mnt'}">${pct>30?t('st_stock'):t('st_low')}</span></div>
+    <div class="d-meta"><div class="d-coord">${rcab(r)}</div><span class="badge ${pct>30?'b-avl':'b-mnt'}">${pct>30?t('st_stock'):t('st_low')}</span></div>
   </div>
   <div class="artcard p">${photo(r.id,'artimg',name(r))}</div>
   <div class="info">
     <div class="row"><span>${t('d_mfr')}</span><b>${brand(r)}</b></div>
     <div class="row"><span>${t('d_total')}</span><b>${r.cap} mL</b></div>
     <div class="row"><span>${t('d_rem')}</span><b>${r.vol} mL (${pct}%)</b></div>
-    <div class="row"><span>${t('d_lab')}</span><b>${r.lab}</b></div>
-    <div class="row"><span>${t('d_cab')}</span><b>${r.cab}</b></div>
-    <div class="row"><span>${t('d_shelf')}</span><b>${r.shelf}</b></div>
+    <div class="row"><span>${t('d_lab')}</span><b>${rlab(r)}</b></div>
+    <div class="row"><span>${t('d_cab')}</span><b>${rcab(r)}</b></div>
+    <div class="row"><span>${t('d_shelf')}</span><b>${rshelf(r)}</b></div>
   </div>
   <div class="card" style="padding:14px 18px">
     <div style="display:flex;align-items:center;gap:12px">
@@ -911,8 +916,8 @@ function renderProfile(){
     <div><h2 class="serif">${u.name}</h2><small>${uRole} \u00B7 ${uLab}</small></div>
   </div>
   <div class="info" style="margin-bottom:16px">
-    <div class="row"><span>Email</span><b>${u.email}</b></div>
-    <div class="row"><span>${t('pr_since')}</span><b>Sep 2024</b></div>
+    <div class="row"><span>${t('d_email')}</span><b>${u.email}</b></div>
+    <div class="row"><span>${t('pr_since')}</span><b>${LANG==='zh'?'2024\u5E749\u6708':'Sep 2024'}</b></div>
     <div class="row"><span>${t('pr_appts_n')}</span><b>${state.appts.filter(a=>a.status==='up').length}</b></div>
   </div>
   <div class="menu">
@@ -926,7 +931,7 @@ function renderProfile(){
     <button class="mrow" id="p-sw"><span class="mi t">${IC.swap}</span>${t('me_switch')}<span class="chev">${IC.chev}</span></button>
     <button class="mrow" id="p-out"><span class="mi p">${IC.out}</span>${t('me_out')}</button>
   </div>
-  <p style="text-align:center;color:var(--faint);font-size:11px;margin-top:6px">LabSlot \u00B7 v0.1 concept</p>`;
+  <p style="text-align:center;color:var(--faint);font-size:11px;margin-top:6px">LabSlot \u00B7 v0.1 \u6982\u5FF5\u7248</p>`;
  $('#p-msgs').onclick=()=>openInbox();
  $('#p-appts').onclick=()=>openAppts();
  $('#p-hist').onclick=()=>openHistory();
